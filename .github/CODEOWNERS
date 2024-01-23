@@ -1,0 +1,6 @@
+# CI/CD Police
+.github/workflows/conftest.yaml      @DAConsortium/sre-admins
+.github/workflows/secretlint.yaml    @DAConsortium/sre-admins
+.github/workflows/.secretlintrc.json @DAConsortium/sre-admins
+.circleci/policy/*                   @DAConsortium/sre-admins
+.github/CODEOWNERS                   @DAConsortium/sre-admins

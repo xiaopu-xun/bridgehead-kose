@@ -1,0 +1,20 @@
+name: yamllint
+on: pull_request
+jobs:
+  yamllint:
+    name: Run yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: checkout
+      - name: run yamllint
+        run: |
+          yamllint --version
+          yamllint -c .github/workflows/.yamllint .circleci/ .github/
+      - name: run yamllint
+        if: ${{ failure() }}
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          yamllint_flags: '-c .github/workflows/.yamllint .circleci/ .github/'

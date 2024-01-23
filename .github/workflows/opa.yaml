@@ -1,0 +1,21 @@
+name: Test opa policy
+on: push
+jobs:
+  opa:
+    name: Test opa policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PULL_ACCESS_TOKEN }}
+      - uses: actions/checkout@v4
+        name: checkout
+      - name: test open policy agent for circleci
+        run: |
+          docker run -v "$(pwd)":"$(pwd)" \
+            -w "$(pwd)" \
+            --rm \
+            openpolicyagent/opa test \
+            -v .circleci/policy/

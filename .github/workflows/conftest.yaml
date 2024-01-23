@@ -1,0 +1,19 @@
+name: Validate CircleCI config
+on: push
+jobs:
+  conftest:
+    name: Validate CircleCI config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PULL_ACCESS_TOKEN }}
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: validate
+        uses: instrumenta/conftest-action@master
+        with:
+          files: .circleci/config.yml
+          policy: .circleci/policy/circleci.rego
