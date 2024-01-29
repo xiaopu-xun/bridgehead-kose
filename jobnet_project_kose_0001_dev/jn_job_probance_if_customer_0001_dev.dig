@@ -2,12 +2,12 @@ timezone: Asia/Tokyo
 
 _export:
 
-# +task1:
-#   td>: jn_sql_probance_interface_customer_0001.sql
-#   create_table: probance_data_customer
++task1:
+  td>: jn_sql_probance_interface_customer_0001.sql
+  create_table: probance_data_customer
 
 +task2:
-  td>: test_no_records.sql #jn_sql_probance_customer_comparison.sql
+  td>: jn_sql_probance_customer_comparison.sql
   result_connection: ${probance.upload_maison_kose.result_connection}
   result_settings:
     user_directory_is_root: true
@@ -19,10 +19,10 @@ _export:
     null_string: ""
     newline: CRLF
 
-# +task3:
-#   td_ddl>:
-#   drop_tables: [probance_previous_data_customer]
++task3:
+  td_ddl>:
+  drop_tables: [probance_previous_data_customer]
 
-# +task4:
-#   td_ddl>:
-#   rename_tables: [{from: probance_data_customer, to: probance_previous_data_customer}]
++task4:
+  td_ddl>:
+  rename_tables: [{from: probance_data_customer, to: probance_previous_data_customer}]
