@@ -1,0 +1,210 @@
+#
+# KOSE_ECBeingアイテムマスタ情報取得(洗い替え)
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.ecbeing_item_mst}
+  decoders:
+    - {type: gzip}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 0 # ECBeingアイテムマスタ情報はヘッダー行なし
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: item_cd, type: string}
+      - {name: category_nm, type: string}
+      - {name: mall, type: string}
+      - {name: shop_cd, type: string}
+      - {name: item_nm, type: string}
+      - {name: item_nm_2, type: string}
+      - {name: variation_group, type: string}
+      - {name: variation_order, type: string}
+      - {name: size_cd, type: string}
+      - {name: size, type: string}
+      - {name: color_cd, type: string}
+      - {name: color, type: string}
+      - {name: jan_cd, type: string}
+      - {name: item_no_1, type: string}
+      - {name: item_no_2, type: string}
+      - {name: item_no_3, type: string}
+      - {name: supplier, type: string}
+      - {name: brand, type: string}
+      - {name: selling_group, type: string}
+      - {name: order_detail_extension, type: string}
+      - {name: order_detail_extension_input, type: string}
+      - {name: list_price, type: string}
+      - {name: purchase_price, type: string}
+      - {name: tax_classification, type: string}
+      - {name: individual_tax_rate, type: string}
+      - {name: selling_limited_qty, type: string}
+      - {name: selling_max_qty, type: string}
+      - {name: selling_min_qty, type: string}
+      - {name: postage_calc_no, type: string}
+      - {name: individual_postage, type: string}
+      - {name: individual_postage_exc_tax, type: string}
+      - {name: delivery_temperature_range, type: string}
+      - {name: sp_pc_same_setting, type: string}
+      - {name: catch_copy, type: string}
+      - {name: detail_url, type: string}
+      - {name: detail_url_sp, type: string}
+      - {name: shipping_slip_item_nm, type: string}
+      - {name: content_item_nm, type: string}
+      - {name: country_of_origin_id, type: string}
+      - {name: weight, type: string}
+      - {name: hs_cd, type: string}
+      - {name: list_screen_existence, type: string}
+      - {name: detail_screen_existence, type: string}
+      - {name: by_site_cart_display, type: string}
+      - {name: by_color_cart_display, type: string}
+      - {name: single_item_propriety, type: string}
+      - {name: item_import, type: string}
+      - {name: arrival_application_propriety, type: string}
+      - {name: criteo_link, type: string}
+      - {name: order, type: string}
+      - {name: title, type: string}
+      - {name: meta_keyword, type: string}
+      - {name: meta_description, type: string}
+      - {name: h1_tag_display_content, type: string}
+      - {name: custom_url, type: string}
+      - {name: custom_url_raw_data, type: string}
+      - {name: item_classification, type: string}
+      - {name: trial_classification, type: string}
+      - {name: item_classification_3, type: string}
+      - {name: item_classification_4, type: string}
+      - {name: item_classification_5, type: string}
+      - {name: gift_wrapping_size_standard, type: string}
+      - {name: item_attribution_2, type: string}
+      - {name: item_attribution_3, type: string}
+      - {name: variation_category_nm, type: string}
+      - {name: variation_category_comment, type: string}
+      - {name: item_attribution_6, type: string}
+      - {name: item_attribution_7, type: string}
+      - {name: item_attribution_8, type: string}
+      - {name: item_attribution_9, type: string}
+      - {name: item_attribution_10, type: string}
+      - {name: icon_1, type: string}
+      - {name: icon_2, type: string}
+      - {name: icon_3, type: string}
+      - {name: publication_start_date, type: string}
+      - {name: publication_end_date, type: string}
+      - {name: release_date, type: string}
+      - {name: subscription_item, type: string}
+      - {name: regular_delivery_period, type: string}
+      - {name: set_item, type: string}
+      - {name: noshi_setting, type: string}
+      - {name: note_internal, type: string}
+      - {name: condition, type: string}
+      - {name: s_img_file, type: string}
+      - {name: s_img_description, type: string}
+      - {name: l_img_file, type: string}
+      - {name: l_img_description, type: string}
+      - {name: c_img_file, type: string}
+      - {name: c_img_description, type: string}
+      - {name: img_1_file, type: string}
+      - {name: img_1_description, type: string}
+      - {name: img_2_file, type: string}
+      - {name: img_2_description, type: string}
+      - {name: img_3_file, type: string}
+      - {name: img_3_description, type: string}
+      - {name: img_4_file, type: string}
+      - {name: img_4_description, type: string}
+      - {name: img_5_file, type: string}
+      - {name: img_5_description, type: string}
+      - {name: img_6_file, type: string}
+      - {name: img_6_description, type: string}
+      - {name: img_7_file, type: string}
+      - {name: img_7_description, type: string}
+      - {name: img_8_file, type: string}
+      - {name: img_8_description, type: string}
+      - {name: img_9_file, type: string}
+      - {name: img_9_description, type: string}
+      - {name: narrow_down_cd_1, type: string}
+      - {name: narrow_down_cd_2, type: string}
+      - {name: narrow_down_cd_3, type: string}
+      - {name: narrow_down_cd_4, type: string}
+      - {name: narrow_down_cd_5, type: string}
+      - {name: narrow_down_cd_6, type: string}
+      - {name: narrow_down_cd_7, type: string}
+      - {name: narrow_down_cd_8, type: string}
+      - {name: narrow_down_cd_9, type: string}
+      - {name: narrow_down_cd_10, type: string}
+      - {name: narrow_down_cd_11, type: string}
+      - {name: narrow_down_cd_12, type: string}
+      - {name: stock_ordinary_comment, type: string}
+      - {name: stock_low_comment, type: string}
+      - {name: stock_out_comment, type: string}
+      - {name: comment_threshold_value, type: string}
+      - {name: stock_display_method, type: string}
+      - {name: stock_existence_flag, type: string}
+      - {name: publication_existence_flag, type: string}
+      - {name: list_narrow_down_re_calc_object_time, type: string}
+      - {name: custom_order_item, type: string}
+      - {name: custom_order_item_cart_button, type: string}
+      - {name: custom_order_url, type: string}
+      - {name: variation_intensiveness, type: string}
+      - {name: variation_display_priority, type: string}
+      - {name: registration_date, type: string}
+      - {name: update_date, type: string}
+      - {name: update_user, type: string}
+      - {name: site_selling_limit_qty, type: string}
+      - {name: mail_flag, type: string}
+      - {name: mail_postage, type: string}
+      - {name: item_ranking_totalization_object, type: string}
+      - {name: selling_available_period_start_date, type: string}
+      - {name: selling_available_period_end_date, type: string}
+      - {name: gift_wrapping_impossible_flag, type: string}
+      - {name: marking_group, type: string}
+      - {name: message_card_group_id, type: string}
+      - {name: external_cart_1_url, type: string}
+      - {name: external_cart_2_url, type: string}
+      - {name: external_cart_3_url, type: string}
+      - {name: external_cart_4_url, type: string}
+      - {name: external_cart_5_url, type: string}
+      - {name: external_cart_6_url, type: string}
+      - {name: external_cart_7_url, type: string}
+      - {name: external_cart_8_url, type: string}
+      - {name: external_cart_9_url, type: string}
+      - {name: external_cart_10_url, type: string}
+      - {name: campaign_coupon_markdown_object_flag, type: string}
+      - {name: stock_low_flag, type: string}
+      - {name: selling_price_inc_tax, type: string}
+      - {name: selling_price_exc_tax, type: string}
+      - {name: sale_price_inc_tax, type: string}
+      - {name: sale_price_exc_tax, type: string}
+      - {name: sale_period_start_date, type: string}
+      - {name: sale_period_end_date, type: string}
+      - {name: sale_nm, type: string}
+      - {name: item_comment_1, type: string}
+      - {name: item_comment_2_supplementary_explanation, type: string}
+      - {name: item_comment_3, type: string}
+      - {name: item_comment_4, type: string}
+      - {name: item_comment_5, type: string}
+      - {name: item_comment_6_reserve, type: string}
+      - {name: item_comment_7_reserve, type: string}
+      - {name: item_comment_8_reserve, type: string}
+      - {name: item_comment_9_reserve, type: string}
+      - {name: item_comment_1_sp, type: string}
+      - {name: item_comment_2_sp, type: string}
+      - {name: item_comment_3_sp, type: string}
+      - {name: item_comment_4_sp, type: string}
+      - {name: item_comment_5_sp, type: string}
+      - {name: cart_throwing_message_purchasing_attention, type: string}
+      - {name: keyword, type: string}
+      - {name: hashtag, type: string}
+      - {name: subordinate_item_cd, type: string}
+      - {name: genre_nm, type: string}
+out:
+  mode: replace
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

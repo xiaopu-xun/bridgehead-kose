@@ -1,0 +1,36 @@
+#
+# KOSE_セット情報取得
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.set_mst}
+  decoders:
+    - {type: gzip}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 0 # セット情報はヘッダー行なし
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: item_code, type: string}
+    - {name: item_name, type: string}
+    - {name: component_serial_number, type: string}
+    - {name: component_code, type: string}
+    - {name: component_name, type: string}
+    - {name: item_group, type: string}
+    - {name: number, type: double}
+    - {name: use_start_date, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

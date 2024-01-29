@@ -1,19 +1,24 @@
-timezone: Asia/Tokyo
+#
+# KOSE_顧客情報取得
+#
 
-#_export:
-#  td:
-#    database: kosedmp_prd_secure
+_export:
+  dst_table: customer
+  
+  filename:
+    customer: k00001/k00055/csv/tran/koseCustomerData_${moment(session_time).format("YYYYMMDD")}
 
 +task1:
-  td_load>: s3_import_1693890630
+  td_load>: etl/config/load_customer.yml
+  table: ${dst_table}
 
 +task2:
-  _export:
-    var: 'test_variable'
-  td>: jn_sql_etlimp_select_customer_count.sql
+  td>: common/sql/count_record_for_session_day.sql
+  target_table: ${dst_table}
   store_last_results: true
 
+# 会員系の当日データ不備は異常終了とする
 +task3:
   if>: ${td.last_results.count == 0}
   _do:
-    fail>: '[import error] customer count is 0.'
+    fail>: '[ERROR] customer count is 0.'

@@ -1,0 +1,47 @@
+#
+# KOSE_アイテム情報取得
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.item_mst}
+  decoders:
+    - {type: gzip}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 0 # アイテム情報はヘッダー行なし
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: hinmoku_cd, type: string}
+      - {name: syohin_fg, type: string}
+      - {name: gosu, type: string}
+      - {name: hanbai_name_jpn, type: string}
+      - {name: cut_syohin_name, type: string}
+      - {name: jan_cd, type: string}
+      - {name: n_cd, type: string}
+      - {name: senden_kbn, type: string}
+      - {name: price, type: double}
+      - {name: jigyo_class_name, type: string}
+      - {name: daihan_class_name, type: string}
+      - {name: hanbai_class_name, type: string}
+      - {name: line_class_name, type: string}
+      - {name: category_class_name, type: string}
+      - {name: func_class1_name, type: string}
+      - {name: func_class2_name, type: string}
+      - {name: hatubai_date, type: string}
+      - {name: limited_kbn, type: string}
+      - {name: rank_sitei, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

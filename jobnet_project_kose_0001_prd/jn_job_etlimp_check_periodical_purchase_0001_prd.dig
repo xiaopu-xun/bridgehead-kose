@@ -1,15 +1,15 @@
 #
-# KOSE_購買明細情報取得
+# KOSE_定期購買情報取得
 #
 
 _export:
-  dst_table: order_detail
+  dst_table: periodical_purchase
   
   filename:
-    order_detail: k00001/k00055/csv/tran/koseOrderDetailData_${moment(session_time).format("YYYYMMDD")}
+    periodical_purchase: k00001/k00055/csv/tran/kosePeriodicalPurchase_${moment(session_time).format("YYYYMMDD")}
 
 +task1:
-  td_load>: etl/config/load_order_detail.yml
+  td_load>: etl/config/load_periodical_purchase.yml
   table: ${dst_table}
 
 +task2:
@@ -21,4 +21,4 @@ _export:
 +task3:
   if>: ${td.last_results.count == 0}
   _do:
-    fail>: '[ERROR] order detail count is 0.'
+    fail>: '[ERROR] periodical purchase count is 0.'

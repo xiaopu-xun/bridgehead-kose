@@ -1,0 +1,120 @@
+#
+# KOSE_定期購買情報取得
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.periodical_purchase}
+  decoders:
+    - {type: gzip}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 1 # 定期購買情報はヘッダー行あり
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: periodical_purchase_code, type: string}
+      - {name: customer_code_hash, type: string}
+      - {name: status, type: string}
+      - {name: payment_executor, type: string}
+      - {name: auto_allocation_flag, type: string}
+      - {name: currency_code, type: string}
+      - {name: cart_code_prefix, type: string}
+      - {name: order_code_base_prefix, type: string}
+      - {name: scheduled_timestamp, type: string}
+      - {name: schedule_type, type: string}
+      - {name: schedule_details_purchase_week_interval, type: string}
+      - {name: schedule_details_purchase_month_interval, type: string}
+      - {name: schedule_details_day_of_month, type: string}
+      - {name: schedule_details_day_of_week, type: string}
+      - {name: schedule_details_week_of_month, type: string}
+      - {name: schedule_details_time_zone, type: string}
+      - {name: sku_entry_sku_code, type: string}
+      - {name: sku_entry_lang, type: string}
+      - {name: sku_entry_store_code, type: string}
+      - {name: sku_entry_inventory_type, type: string}
+      - {name: sku_entry_inventory_deadline_timestamp, type: string}
+      - {name: sku_entry_quantity, type: string}
+      - {name: sku_entry_addon_service_entries_entry_index, type: string}
+      - {name: sku_entry_addon_service_entries_addon_service_code, type: string}
+      - {name: sku_entry_addon_service_entries_lang, type: string}
+      - {name: sku_entry_addon_service_entries_quantity, type: string}
+      - {name: sku_entry_addon_service_entries_tax_code, type: string}
+      - {name: sku_entry_addon_service_entries_tax_name, type: string}
+      - {name: sku_entry_addon_service_entries_tax_rate, type: string}
+      - {name: sku_entry_addon_service_entries_addon_service_name, type: string}
+      - {name: sku_entry_addon_service_entries_price_ex_vat, type: string}
+      - {name: sku_entry_addon_service_entries_price_in_vat, type: string}
+      - {name: sku_entry_addon_service_entries_use_spot_price_flag, type: string}
+      - {name: sku_entry_addon_service_entries_addon_service_details, type: string}
+      - {name: sku_entry_addon_service_entries_attributes, type: string}
+      - {name: sku_entry_tax_code, type: string}
+      - {name: sku_entry_tax_name, type: string}
+      - {name: sku_entry_tax_rate, type: string}
+      - {name: sku_entry_sku_name, type: string}
+      - {name: sku_entry_item_code, type: string}
+      - {name: sku_entry_item_name, type: string}
+      - {name: sku_entry_selling_price_ex_vat, type: string}
+      - {name: sku_entry_selling_price_in_vat, type: string}
+      - {name: sku_entry_price_ex_vat, type: string}
+      - {name: sku_entry_price_in_vat, type: string}
+      - {name: sku_entry_price_std_ex_vat, type: string}
+      - {name: sku_entry_price_std_in_vat, type: string}
+      - {name: sku_entry_use_spot_price_flag, type: string}
+      - {name: sku_entry_sku_details_jan_code, type: string}
+      - {name: sku_entry_sku_details_product_code, type: string}
+      - {name: sku_entry_sku_details_variation_code, type: string}
+      - {name: sku_entry_sku_details_size_code, type: string}
+      - {name: sku_entry_sku_details_size, type: string}
+      - {name: sku_entry_sku_details_color_code, type: string}
+      - {name: sku_entry_sku_details_color, type: string}
+      - {name: contact_info_code, type: string}
+      - {name: receipt_type, type: string}
+      - {name: delivery_fee_delivery_fee_ex_vat, type: string}
+      - {name: delivery_fee_in_vat, type: string}
+      - {name: delivery_fee_vat_details_tax_code, type: string}
+      - {name: delivery_fee_vat_details_tax_name, type: string}
+      - {name: delivery_fee_vat_details_tax_rate, type: string}
+      - {name: delivery_fee_vat_details_delivery_fee_ex_vat, type: string}
+      - {name: delivery_fee_vat_details_delivery_fee_in_vat, type: string}
+      - {name: delivery_details_delivery_type, type: string}
+      - {name: delivery_details_delivery_wish_timestamp, type: string}
+      - {name: delivery_details_delivery_plan_timestamp, type: string}
+      - {name: delivery_details_delivery_plan_term, type: string}
+      - {name: delivery_details_delivery_company_code, type: string}
+      - {name: delivery_details_tracking_number, type: string}
+      - {name: delivery_details_delivery_slip_number, type: string}
+      - {name: delivery_details_freight_collect_flag, type: string}
+      - {name: delivery_details_original_delivery_fee_ex_vat, type: string}
+      - {name: delivery_details_original_delivery_fee_in_vat, type: string}
+      - {name: delivery_details_delivery_remarks, type: string}
+      - {name: delivery_details_attributes_parcel_box, type: string}
+      - {name: delivery_info_code, type: string}
+      - {name: delivery_duration, type: string}
+      - {name: delivery_expiry_offset, type: string}
+      - {name: attributes_payment_type, type: string}
+      - {name: attributes_payment_method, type: string}
+      - {name: payer_delivery_info_code, type: string}
+      - {name: attributes_sku_status, type: string}
+      - {name: attributes_cancellation_timestamp, type: string}
+      - {name: attributes_status_change_type, type: string}
+      - {name: attributes_status_change_type_name, type: string}
+      - {name: attributes_status_change_reason, type: string}
+      - {name: filecreatedate, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}
+  - type: rename
+    columns:
+      attributes_payment_type: payment_type
+      attributes_payment_method: payment_method
