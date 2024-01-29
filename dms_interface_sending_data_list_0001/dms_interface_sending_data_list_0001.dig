@@ -16,7 +16,7 @@ _export:
   create_table: dms_sending_data_weekly
 
 +task2:
-  td>: ms_sending_data_comparison_count.sql
+  td>: dms_sending_data_comparison_count.sql
   store_last_results: true
 
 +task3:
