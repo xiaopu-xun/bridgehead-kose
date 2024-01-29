@@ -70,7 +70,7 @@ WITH prep AS(
 		IF(first_buy_time = '', null, first_buy_time) AS first_buy_time,
 		buy_count_maison,
 		buy_count_maihada,
-		IF(l.mag_drphil = '', null, l.mag_drphil) AS mag_drphil,
+		IF(mag_drphil = '', null, l.mag_drphil) AS mag_drphil,
 		IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil,
 		IF(customer_rank = '', null, customer_rank) AS customer_rank
 	FROM
