@@ -1,0 +1,22 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_maihada_basic2.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: maihada_basic2
+    mode: update
+    unique: order_date,subscription_flg,first_buy_flg,auto_buy_flg,honpin_flg
+    method: copy
+    schema: public
+
+#今回参照した一時テーブルも削除
++task2:
+  td_ddl>:
+  drop_tables: [tmp_maihada_reporting_basic1]

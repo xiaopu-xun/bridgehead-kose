@@ -1,0 +1,29 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_membership.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: membership
+    mode: update
+    unique: year,date
+    method: insert
+    schema: public
+
++task2:
+  td>: jn_sql_line_follower_num.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: line_follower_num
+    mode: update
+    unique: year,date
+    method: insert
+    schema: public

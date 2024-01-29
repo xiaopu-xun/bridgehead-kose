@@ -1,0 +1,91 @@
+#
+# KOSE_購買明細情報取得
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.order_detail}
+  decoders:
+    - {type: gzip}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 1 # 購買明細情報はヘッダー行あり
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: order_code, type: string}
+      - {name: order_detail_code, type: string}
+      - {name: sku_code, type: string}
+      - {name: sku_name, type: string}
+      - {name: item_code, type: string}
+      - {name: item_name, type: string}
+      - {name: quantity, type: long}
+      - {name: returned_quantity, type: long}
+      - {name: price_ex_vat, type: long}
+      - {name: price_in_vat, type: long}
+      - {name: price_std_ex_vat, type: long}
+      - {name: price_std_in_vat, type: long}
+      - {name: sku_details_jan_code, type: string}
+      - {name: sku_details_product_code, type: string}
+      - {name: sku_details_variation_code, type: string}
+      - {name: sku_details_size_code, type: string}
+      - {name: sku_details_size, type: string}
+      - {name: sku_details_color_code, type: string}
+      - {name: sku_details_color, type: string}
+      - {name: addon_services, type: string}
+      - {name: amount_sku_ex_vat, type: long}
+      - {name: amount_sku_in_vat, type: long}
+      - {name: amount_addon_service_ex_vat, type: long}
+      - {name: amount_addon_service_in_vat, type: long}
+      - {name: selling_price_ex_vat, type: long}
+      - {name: selling_price_in_vat, type: long}
+      - {name: lang, type: string}
+      - {name: attributes_points, type: string}
+      - {name: attributes_order_type, type: string}
+      - {name: attributes_periodical_item, type: string}
+      - {name: attributes_set_item, type: string}
+      - {name: attributes_item_type, type: string}
+      - {name: attributes_status, type: string}
+      - {name: attributes_product_type, type: string}
+      - {name: attributes_kose_product, type: string}
+      - {name: attributes_user_order_detail_type, type: string}
+      - {name: attributes_create_date, type: string}
+      - {name: attributes_update_date, type: string}
+      - {name: attributes_create_user, type: string}
+      - {name: attributes_update_user, type: string}
+      - {name: filecreatedate, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}
+  - type: rename
+    columns:
+      sku_details_jan_code: jan_code
+      sku_details_product_code: product_code
+      sku_details_variation_code: variation_code
+      sku_details_size_code: size_code
+      sku_details_size: size
+      sku_details_color_code: color_code
+      sku_details_color: color
+      attributes_points: points
+      attributes_order_type: order_type
+      attributes_periodical_item: periodical_item
+      attributes_set_item: set_item
+      attributes_item_type: item_type
+      attributes_status: status
+      attributes_product_type: product_type
+      attributes_kose_product: kose_product
+      attributes_user_order_detail_type: user_order_detail_type
+      attributes_create_date: create_date
+      attributes_update_date: update_date
+      attributes_create_user: create_user
+      attributes_update_user: update_user

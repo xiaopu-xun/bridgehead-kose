@@ -1,0 +1,28 @@
+#
+# KOSE_顧客情報(個人情報あり)取得
+#
+
+_export:
+  dst_database: ${td.pii_database}
+  dst_table: customer_pii
+  
+  filename:
+    customer_pii: k00001/k00055/csv/tran/koseCustomerData_${moment(session_time).format("YYYYMMDD")}
+
++task1:
+  td_load>: etl/config/load_customer_pii.yml
+  database: ${dst_database}  # 個人情報データは別データベースに格納する
+  table: ${dst_table}
+
++task2:
+  td>: common/sql/count_record_for_session_day.sql
+  database: ${dst_database}
+  target_table: ${dst_table}
+  store_last_results: true
+
+# 会員系の当日データ不備は異常終了とする
++task3:
+  if>: ${td.last_results.count == 0}
+  _do:
+    fail>: '[ERROR] customer_pii count is 0.'
+

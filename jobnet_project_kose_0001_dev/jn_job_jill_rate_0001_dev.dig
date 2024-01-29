@@ -1,0 +1,32 @@
+timezone: Asia/Tokyo
+
+_export:
+#  td:
+#    database: kosedmp_dev_secure
+  # start_date: ${moment(session_time).add('months', -100).startOf('month').unix()}
+  start_date: 1304175600 #2011-05-01 固定
+  end_date: ${moment(session_time).add('months', 1).startOf('month').unix()}
+
++task1:
+  td_ddl>:
+  drop_tables: [tmp_reporting_013]
+
++task2:
+  td>: jn_sql_repeat_rate_analysis_1.sql
+  insert_into: tmp_reporting_013
+
++task3:
+  td>: jn_sql_repeat_rate_analysis.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_repeat_rate_analysis
+    mode: update
+    unique: system_code,year,shipped_ym,diff_days
+    method: copy
+    schema: public
+
++task4:
+  td_ddl>:
+  drop_tables: [tmp_reporting_013]

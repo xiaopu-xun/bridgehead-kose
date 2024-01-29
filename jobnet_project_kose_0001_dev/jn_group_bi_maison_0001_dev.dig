@@ -1,0 +1,45 @@
+timezone: Asia/Tokyo
+
+# Maison用データマート作成処理
++data_maison_create:
+  _parallel: false
+
+  # yesterday_maison_line_friend、yesterday_maison_line_connect作成
+#  +task_maison_line_0002:
+#    call>: jn_job_maison_line_0002_dev.dig
+
+  # tab_maison_ga1作成
+#  +task_maison_ga_0001:
+#    call>: jn_job_maison_ga_0001_dev.dig
+
+  # tab_maison_id_demoguram作成
+#  +task_maison_demoguram_0001:
+#    call>: jn_job_maison_demoguram_0001_dev.dig
+
+  # tab_maison_id_registration作成
+#  +task_maison_id_registration_0001:
+#    call>: jn_job_maison_id_registration_0001_dev.dig
+
+  # tab_masion_line作成
+#  +task_maison_line_0001:
+#    call>: jn_job_maison_line_0001_dev.dig
+
+  # tab_maison_sales作成
+#  +task_maison_sales_0001:
+#    call>: jn_job_maison_sales_0001_dev.dig
+
+  # tab_maison_customer作成
+  +task_maison_customer_0001:
+    call>: jn_job_maison_customer_0001_dev.dig
+
+  # tab_maison_customer_new作成
+  +task_maison_customer_0002:
+    call>: jn_job_maison_customer_0002_dev.dig
+
+  # tab_maison_first_buy作成
+  +task_maison_1st_buy_0001:
+    call>: jn_job_maison_1st_buy_0001_dev.dig
+
+  # tab_maison_referer作成
+  +task_maison_1st_buy_0002:
+    call>: jn_job_maison_1st_buy_0002_dev.dig

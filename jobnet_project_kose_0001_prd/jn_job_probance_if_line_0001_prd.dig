@@ -1,0 +1,33 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
+# +task1:
+#   td>: jn_sql_probance_line_friend_maihada.sql
+#   create_table: probance_line_friend_maihada
+
+# +task2:
+#   td>: jn_sql_probance_line_friend_maison.sql
+#   create_table: probance_line_friend_maison
+
+# +task3:
+#   td>: jn_sql_probance_interface_line_0001.sql
+#   create_table: probance_data_line
+
++task4:
+  td>: jn_sql_probance_line_comparison.sql
+  result_connection: kosedmp_export_s3_prd
+  result_settings:
+    bucket: kosedmp-probance-before-prd
+    path: kosedmpSegment/doneLineUserData/done_line_user_${moment().format("YYYYMMDD")}_${moment().format("YYYYMMDDHHmmss")}_002_003_000000000000000000000000000000.csv
+    header: true
+
+# +task5:
+#   td_ddl>:
+#   drop_tables: [probance_previous_data_line]
+
+# +task6:
+#   td_ddl>:
+#   rename_tables: [{from: probance_data_line, to: probance_previous_data_line}]

@@ -1,0 +1,9 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  td>: jn_sql_create_jill_segment_common_order.sql
+  create_table: jill_segment_common_order

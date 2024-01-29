@@ -1,0 +1,17 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  td>: jn_sql_create_bi_segment_customer.sql
+  create_table: bi_segment_customer
+
++task2:
+  td>: jn_sql_create_bi_segment_order.sql
+  create_table: bi_segment_order
+
++task3:
+  td>: jn_sql_create_bi_segment_order_detail.sql
+  create_table: bi_segment_order_detail

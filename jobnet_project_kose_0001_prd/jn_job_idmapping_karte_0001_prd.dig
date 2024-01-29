@@ -1,0 +1,9 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_idmapping_karte.sql
+  create_table: karte_idmapping

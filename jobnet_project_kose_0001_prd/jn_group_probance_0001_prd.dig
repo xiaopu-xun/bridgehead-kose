@@ -1,0 +1,13 @@
+timezone: Asia/Tokyo
+
+# Probanceデータ作成処理
++probance_data_transform:
+  _parallel: false
+
+  # create_segment_probance_order
+  +task_probance_segment_0001:
+    call>: jn_job_probance_segment_0001_prd.dig
+
+  # create_segment_probance_order_detail
+  +task_probance_segment_0002:
+    call>: jn_job_probance_segment_0002_prd.dig

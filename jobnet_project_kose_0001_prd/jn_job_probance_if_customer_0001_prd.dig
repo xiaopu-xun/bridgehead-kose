@@ -1,0 +1,25 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_probance_interface_customer_0001.sql
+  create_table: probance_data_customer
+
++task2:
+  td>: jn_sql_probance_customer_comparison.sql
+  result_connection: kosedmp_export_s3_prd
+  result_settings:
+    bucket: kosedmp-probance-before-prd
+    path: kosedmpSegment/customerData/customer_${moment().format("YYYYMMDD")}_${moment().format("YYYYMMDDHHmmss")}_002_001_000000000000000000000000111101.csv
+    header: true
+
++task3:
+  td_ddl>:
+  drop_tables: [probance_previous_data_customer]
+
++task4:
+  td_ddl>:
+  rename_tables: [{from: probance_data_customer, to: probance_previous_data_customer}]

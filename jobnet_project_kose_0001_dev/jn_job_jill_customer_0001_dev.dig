@@ -1,0 +1,34 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  td_ddl>:
+  drop_tables: [tmp_reporting_001]
+
++task2:
+  # 前月・今月分を再作成
+  start_date: 1304175600 # 2011/05/01 全期間内での回数を求めるため、集計開始は固定にする必要がある。
+  # start_date: ${moment(session_time).add('months', -1).startOf('month').unix()}
+  end_date: ${moment(session_time).add('months', 1).startOf('month').unix()}
+
+  td>: jn_sql_customer_analysis_1.sql
+  insert_into: tmp_reporting_001
+
++task3:
+  td>: jn_sql_customer_analysis.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_customer_analysis
+    mode: update
+    unique: year,date
+    method: copy
+    schema: public
+
++task4:
+  td_ddl>:
+  drop_tables: [tmp_reporting_001]

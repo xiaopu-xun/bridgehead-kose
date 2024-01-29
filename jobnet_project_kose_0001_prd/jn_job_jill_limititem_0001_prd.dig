@@ -1,0 +1,33 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td_ddl>:
+  drop_tables: [tmp_reporting_004]
+
++task2:
+  # 前月・今月分を再作成
+  start_date: ${moment(session_time).add('months', -1).startOf('month').unix()}
+  end_date: ${moment(session_time).add('months', 1).startOf('month').unix()}
+
+  td>: jn_sql_jill_limited_item_sales_1.sql
+  insert_into: tmp_reporting_004
+
++task3:
+  td>: jn_sql_jill_limited_item_sales.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: limited_item_sales
+    mode: update
+    unique: year,date
+    method: copy
+    schema: public
+
++task4:
+  td_ddl>:
+  drop_tables: [tmp_reporting_004]

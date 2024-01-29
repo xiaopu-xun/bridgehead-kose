@@ -1,0 +1,24 @@
+#
+# KOSE_購買明細情報取得
+#
+
+_export:
+  dst_table: order_detail
+  
+  filename:
+    order_detail: k00001/k00055/csv/tran/koseOrderDetailData_${moment(session_time).format("YYYYMMDD")}
+
++task1:
+  td_load>: etl/config/load_order_detail.yml
+  table: ${dst_table}
+
++task2:
+  td>: common/sql/count_record_for_session_day.sql
+  target_table: ${dst_table}
+  store_last_results: true
+
+# 受注系の当日データ不備は異常終了とする
++task3:
+  if>: ${td.last_results.count == 0}
+  _do:
+    fail>: '[ERROR] order detail count is 0.'

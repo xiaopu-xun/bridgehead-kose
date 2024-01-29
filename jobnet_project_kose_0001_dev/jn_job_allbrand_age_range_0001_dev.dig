@@ -1,0 +1,17 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  td>: jn_sql_member_age_range_count.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_member_age_range_num
+    mode: update
+    unique: date
+    method: insert
+    schema: public

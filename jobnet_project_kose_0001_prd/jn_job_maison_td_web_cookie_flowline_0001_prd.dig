@@ -1,0 +1,24 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+#初回：全件連携
+  # start_date: ${moment('2019-11-08').unix()}  #この値を含む
+  # end_date: ${moment(session_time).unix()} #この値を含まない
+#以降：日毎のデータ連携（午前中に前日分を連携）
+  start_date: ${moment(session_time).add('days', -1).unix()}  #この値を含む
+  end_date: ${moment(session_time).unix()} #この値を含まない
+
+  td>: jn_sql_maison_td_web_cookie_customer_flowline.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: maison_td_web_cookie_customer_flowline
+    mode: update
+    unique: cookie_time,medium
+    method: copy
+    schema: public

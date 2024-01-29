@@ -1,0 +1,19 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  client_id: "88c73e51a0f3f4c4"
+
+  td>: jn_sql_maison_line.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: tab_masion_line
+    mode: update
+    unique: date,new_num
+    method: copy
+    schema: public

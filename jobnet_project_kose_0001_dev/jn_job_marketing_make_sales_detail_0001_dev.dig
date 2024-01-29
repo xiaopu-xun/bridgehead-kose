@@ -1,0 +1,69 @@
+timezone: Asia/Tokyo
+
+_export:
+#  td:
+#    database: kosedmp_dev_secure
+
+  # 出力範囲
+  # 前月・今月分を再作成
+  start_date: '2019-01-01'
+  # start_date: ${moment(session_time).add('months', -1).startOf('month').unix()}
+  # end_date: '2021-04-30'
+  end_date: ${moment(session_time).add('months', 1).startOf('month').format("YYYY-MM-DD")}
+
++task1:
+  td>: jn_sql_create_tmp_bi_checkout_price_date.sql
+  create_table: tmp_bi_checkout_price_date
+  
++task2:
+  td>: jn_sql_create_tmp_bi_shipped_price_date.sql
+  create_table: tmp_bi_shipped_price_date
+
++task3:
+  td>: jn_sql_create_tmp_bi_session_date.sql
+  create_table: tmp_bi_session_date
+
++task4:
+  td>: jn_sql_create_tmp_bi_purchases_date.sql
+  create_table: tmp_bi_purchases_date
+
++task5:
+  td>: jn_sql_create_tmp_bi_user_date.sql
+  create_table: tmp_bi_user_date
+
++task6:
+  td>: jn_sql_create_tmp_bi_sales_detail.sql
+  create_table: tmp_bi_sales_detail
+
++task7:
+  td>: jn_sql_create_sales_detail.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_sales_detail
+    mode: truncate
+    method: copy
+    schema: public
+
++task8:
+  td>: jn_sql_create_sales_detail_p.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_sales_detail_p
+    mode: truncate
+    method: copy
+    schema: public
+
++task9:
+  td>: jn_sql_create_sales_detail_o.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_sales_detail_o
+    mode: truncate
+    method: copy
+    schema: public

@@ -1,0 +1,17 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td_load>: s3_import_1649171207
+
++task2:
+  td>: jn_sql_etlimp_select_order_detail_count.sql
+  store_last_results: true
+
++task3:
+  if>: ${td.last_results.count == 0}
+  _do:
+    fail>: '[import error] order detail count is 0.'

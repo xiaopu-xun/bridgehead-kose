@@ -1,0 +1,41 @@
+timezone: Asia/Tokyo
+
+# データインポートチェック処理
++data_check:
+  _parallel: false
+
+  # 顧客情報チェック
+  +task_etl_import_customer_check:
+    call>: jn_job_etlimp_check_customer_0001_dev.dig
+  
+  # 顧客情報(個人情報あり)チェック
+  +task_etl_import_customer_pii_check:
+    call>: jn_job_etlimp_check_customer_pii_0001_dev.dig
+
+  # 購買情報チェック
+  +task_etl_import_order_check:
+    call>: jn_job_etlimp_check_order_0001_dev.dig
+
+  # 購買明細情報チェック
+  +task_etl_import_order_detail_check:
+    call>: jn_job_etlimp_check_order_detail_0001_dev.dig
+
+  # 定期情報チェック
+  +task_etl_import_periodical_purchase_check:
+    call>: jn_job_etlimp_check_periodical_purchase_0001_dev.dig
+
+  # セット情報チェック
+  +task_etl_import_set_check:
+    call>: jn_job_etlimp_check_set_mst_0001_dev.dig
+
+  # 店舗情報チェック
+  +task_etl_import_store_check:
+    call>: jn_job_etlimp_check_store_mst_0001_dev.dig
+  
+  # アイテム情報チェック
+  +task_etl_import_item_check:
+    call>: jn_job_etlimp_check_item_mst_0001_dev.dig
+
+  # ECBeingアイテムマスタ情報チェック(洗い替え)
+  +task_etl_import_ecbeing_item_mst_check:
+    call>: jn_job_etlimp_check_ecbeing_item_mst_0001_dev.dig

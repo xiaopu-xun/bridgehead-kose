@@ -1,0 +1,13 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_maison_select_line_friend.sql
+  create_table: yesterday_maison_line_friend
+
++task2:
+  td>: jn_sql_maison_select_line_connect.sql
+  create_table: yesterday_maison_line_connect

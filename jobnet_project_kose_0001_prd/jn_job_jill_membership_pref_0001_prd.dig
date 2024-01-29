@@ -1,0 +1,18 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
+#������擾 
++task1:
+  td>: jn_sql_jill_membership_pref.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: jill_membership_by_pref
+    mode: update
+    unique: date,pref_id
+    method: copy
+    schema: public

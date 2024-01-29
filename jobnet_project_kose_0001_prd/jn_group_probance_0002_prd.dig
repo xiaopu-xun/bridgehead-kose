@@ -1,0 +1,17 @@
+timezone: Asia/Tokyo
+
+# Probanceデータ送信処理
++probance_data_send:
+  _parallel: false
+
+  # Probanceデータ送信処理(顧客情報)
+  +task_probance_interface_customer_0001:
+    call>: jn_job_probance_if_customer_0001_prd.dig
+
+  # Probanceデータ送信処理(注文情報)
+  +task_probance_interface_order_0001:
+    call>: jn_job_probance_if_order_0001_prd.dig
+
+  # Probanceデータ送信処理(LINE情報)
+  +task_probance_interface_line_0001:
+    call>: jn_job_probance_if_line_0001_prd.dig

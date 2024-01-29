@@ -1,0 +1,19 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
+# s3_etl_import_ecbeing_item_prd
++task1:
+  td_load>: s3_import_1572336348
+
++task2:
+  td>: jn_sql_etlimp_ecbeing_item_mst_wk_data_count.sql
+  store_last_results: true
+
++task3:
+  if>: ${td.last_results.count > 0}
+  _do:
+    td>: jn_sql_etlimp_select_ecbeing_item_mst_wk.sql
+    create_table: ecbeing_item_mst

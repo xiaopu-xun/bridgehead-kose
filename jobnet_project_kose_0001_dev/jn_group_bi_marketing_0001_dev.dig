@@ -1,0 +1,21 @@
+timezone: Asia/Tokyo
+
+# マーケティング戦略部ダッシュボードのデータマート作成処理
++data_marketing_dashboard:
+  _parallel: false
+
+  # セグメント顧客・購買・購買明細テーブル作成
+  +task_make_segment:
+    call>: jn_job_marketing_make_segment_0001_dev.dig
+
+  # ブランド別実績テーブル作成
+  +task_make_brand:
+    call>: jn_job_marketing_make_brand_0001_dev.dig
+
+  # アイテムランキングテーブル作成
+  +task_make_item_ranking:
+    call>: jn_job_marketing_make_item_ranking_0001_dev.dig
+
+  # 売上テーブル作成
+  +task_make_sales_detail:
+    call>: jn_job_marketing_make_sales_detail_0001_dev.dig
