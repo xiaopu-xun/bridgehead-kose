@@ -1,0 +1,170 @@
+#
+# KOSE_購買情報取得
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.order}
+  decoders:
+    - {type: gzip}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 1 # 購買情報はヘッダー行あり
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: order_code, type: string}
+      - {name: customer_code_hash, type: string}
+      - {name: registered_flag, type: string}
+      - {name: status, type: string}
+      - {name: sex, type: string}
+      - {name: birthday, type: string}
+      - {name: lang, type: string}
+      - {name: zip_code, type: string}
+      - {name: country, type: string}
+      - {name: state, type: string}
+      - {name: customer_currency_code, type: string}
+      - {name: timezone, type: string}
+      - {name: company, type: string}
+      - {name: department, type: string}
+      - {name: ec_category1, type: string}
+      - {name: ec_category2, type: string}
+      - {name: ec_lank, type: string}
+      - {name: kpadclientclass, type: string}
+      - {name: age, type: string}
+      - {name: order_type, type: string}
+      - {name: payment_executor, type: string}
+      - {name: auto_allocation_flag, type: string}
+      - {name: status_locked_flag, type: string}
+      - {name: currency_code, type: string}
+      - {name: store_code, type: string}
+      - {name: point_details, type: string}
+      - {name: delivery_address_delivery_info_code, type: string}
+      - {name: delivery_address_lang, type: string}
+      - {name: delivery_address_zip_code, type: string}
+      - {name: delivery_address_country, type: string}
+      - {name: delivery_address_state, type: string}
+      - {name: delivery_address_attributes_company, type: string}
+      - {name: delivery_address_attributes_department, type: string}
+      - {name: delivery_details_delivery_wish_timestamp, type: string}
+      - {name: delivery_details_delivery_plan_term, type: string}
+      - {name: delivery_details_attributes_mailbox_flag, type: string}
+      - {name: sku_ex_vat, type: double}
+      - {name: sku_in_vat, type: double}
+      - {name: addon_service_ex_vat, type: double}
+      - {name: addon_service_in_vat, type: double}
+      - {name: discount_ex_vat, type: double}
+      - {name: discount_in_vat, type: double}
+      - {name: point_ex_vat, type: double}
+      - {name: point_in_vat, type: double}
+      - {name: adjustment_ex_vat, type: double}
+      - {name: adjustment_in_vat, type: double}
+      - {name: delivery_fee_ex_vat, type: double}
+      - {name: delivery_fee_in_vat, type: double}
+      - {name: total_ex_vat, type: double}
+      - {name: total_in_vat, type: double}
+      - {name: discount_details, type: string}
+      - {name: payment_type, type: string}
+      - {name: payment_user_information_invoices_included_flag, type: string}
+      - {name: payment_user_information_peyment_type, type: string}
+      - {name: payment_user_information_peyment_method, type: string}
+      - {name: cart_code, type: string}
+      - {name: periodical_purchase_codes, type: string}
+      - {name: receipt_type, type: string}
+      - {name: payment_expiry_timestamp, type: string}
+      - {name: checkout_timestamp, type: string}
+      - {name: accept_target_timestamp, type: string}
+      - {name: accepted_timestamp, type: string}
+      - {name: paid_timestamp, type: string}
+      - {name: shipped_timestamp, type: string}
+      - {name: arrived_timestamp, type: string}
+      - {name: canceled_timestamp, type: string}
+      - {name: shipment_notified_flag, type: string}
+      - {name: order_addon_services, type: string}
+      - {name: user_order_type, type: string}
+      - {name: user_order_status, type: string}
+      - {name: attributes_order_remarks, type: string}
+      - {name: attributes_confirm_timestamp, type: string}
+      - {name: attributes_shipping_designation_plan_timestamp, type: string}
+      - {name: attributes_shipping_designation_timestamp, type: string}
+      - {name: attributes_sales_varification_timestamp, type: string}
+      - {name: attributes_tax_rate, type: string}
+      - {name: attributes_sender_zip_code, type: string}
+      - {name: attributes_sender_country, type: string}
+      - {name: attributes_sender_state, type: string}
+      - {name: attributes_sender_company, type: string}
+      - {name: attributes_sender_department, type: string}
+      - {name: attributes_gift, type: string}
+      - {name: attributes_order_terminal, type: string}
+      - {name: attributes_order_method, type: string}
+      - {name: attributes_original_order_code, type: string}
+      - {name: attributes_return_date, type: string}
+      - {name: attributes_return_pattern, type: string}
+      - {name: attributes_refund_method, type: string}
+      - {name: attributes_receipt_number, type: string}
+      - {name: attributes_distributor_code, type: string}
+      - {name: attributes_sales_staff_code, type: string}
+      - {name: attributes_sales_category, type: string}
+      - {name: attributes_deal_type, type: string}
+      - {name: attributes_import_bill_code, type: string}
+      - {name: attributes_datasource, type: string}
+      - {name: attributes_create_date, type: string}
+      - {name: attributes_update_date, type: string}
+      - {name: attributes_create_user, type: string}
+      - {name: attributes_update_user, type: string}
+      - {name: filecreatedate, type: string}
+      - {name: derivation_order_info, type: string}
+      - {name: attributes_media_code, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}
+  - type: rename
+    columns:
+      delivery_address_delivery_info_code: delivery_info_code
+      delivery_address_attributes_company: delivery_address_company
+      delivery_address_attributes_department: delivery_address_department
+      delivery_details_delivery_wish_timestamp: delivery_wish_timestamp
+      delivery_details_delivery_plan_term: delivery_plan_term
+      delivery_details_attributes_mailbox_flag: mailbox_flag
+      payment_user_information_invoices_included_flag: user_invoices_included_flag
+      payment_user_information_peyment_type: user_peyment_type
+      payment_user_information_peyment_method: user_peyment_method
+      attributes_order_remarks: order_remarks
+      attributes_confirm_timestamp: confirm_timestamp
+      attributes_shipping_designation_plan_timestamp: shipping_designation_plan_timestamp
+      attributes_shipping_designation_timestamp: shipping_designation_timestamp
+      attributes_sales_varification_timestamp: sales_varification_timestamp
+      attributes_tax_rate: tax_rate
+      attributes_sender_zip_code: sender_zip_code
+      attributes_sender_country: sender_country
+      attributes_sender_state: sender_state
+      attributes_sender_company: sender_company
+      attributes_sender_department: sender_department
+      attributes_gift: gift
+      attributes_order_terminal: order_terminal
+      attributes_order_method: order_method
+      attributes_original_order_code: original_order_code
+      attributes_return_date: return_date
+      attributes_return_pattern: return_pattern
+      attributes_refund_method: refund_method
+      attributes_receipt_number: receipt_number
+      attributes_distributor_code: distributor_code
+      attributes_sales_staff_code: sales_staff_code
+      attributes_sales_category: sales_category
+      attributes_deal_type: deal_type
+      attributes_import_bill_code: import_bill_code
+      attributes_datasource: datasource
+      attributes_create_date: create_date
+      attributes_update_date: update_date
+      attributes_create_user: create_user
+      attributes_update_user: update_user

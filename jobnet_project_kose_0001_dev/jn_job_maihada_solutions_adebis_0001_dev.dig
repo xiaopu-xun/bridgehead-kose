@@ -1,0 +1,22 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  # 前月・今月分を再作成
+  # 90日以内のリピート数を見るため、sql内で「end_date+90days」を参照している。
+  start_date: ${moment(session_time).add('months', -1).startOf('month').unix()}
+  end_date: ${moment(session_time).add('months', 1).startOf('month').unix()}
+
+  td>: jn_sql_maihada_solutions_adebis.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_maihada_solutions
+    mode: update
+    unique: delivery_month,media_name
+    method: copy
+    schema: public

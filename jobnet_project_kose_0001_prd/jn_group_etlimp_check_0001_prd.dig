@@ -1,0 +1,25 @@
+timezone: Asia/Tokyo
+
+# データインポートチェック処理
++data_check:
+  _parallel: false
+
+  # ECBeingアイテムマスタ情報チェック
+  +task_etl_import_ecbeing_item_mst_check:
+    call>: jn_job_etlimp_check_ecbeing_item_mst_0001_prd.dig
+
+  # 顧客情報チェック
+  +task_etl_import_customer_check:
+    call>: jn_job_etlimp_check_customer_0001_prd.dig
+
+  # 購買情報チェック
+  +task_etl_import_order_check:
+    call>: jn_job_etlimp_check_order_0001_prd.dig
+
+  # 購買明細情報チェック
+  +task_etl_import_order_detail_check:
+    call>: jn_job_etlimp_check_order_detail_0001_prd.dig
+
+  ## 定期情報チェック ※2021/10/20にコメントアウト(AM4:00に定期情報データが連携されるため)
+  #+task_etl_import_purchase_check:
+  #  call>: jn_job_etlimp_check_purchase_0001_prd.dig

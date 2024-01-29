@@ -1,0 +1,9 @@
+timezone: Asia/Tokyo
+
+# バックアップ処理
++data_backup:
+  _parallel: false
+
+  # create_backup_data
+  +task_backup_0001:
+    call>: jn_job_backup_0001_dev.dig

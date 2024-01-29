@@ -1,0 +1,26 @@
+#
+# KOSE_店舗情報取得
+#
+
+_export:
+  dst_table: store_mst
+  
+  filename:
+    store_mst: k00002/k00055/csv/master/koseStoreData_${moment(session_time).format("YYYYMMDD")}
+
++task1:
+  td_load>: etl/config/load_store_mst.yml
+  table: ${dst_table}
+
++task2:
+  td>: common/sql/count_record_for_session_day.sql
+  target_table: ${dst_table}
+  store_last_results: true
+
+# 商品・店舗マスタ系のデータ不備は正常終了とする
++task3:
+  if>: ${td.last_results.count == 0}
+  _do:
+    mail>: common/mail/is_record.txt
+    subject: '[INFO] KOSEDMP TreasureData workflow'
+    to: [kosedmp_ops@dac.co.jp]

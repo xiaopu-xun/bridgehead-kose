@@ -1,0 +1,23 @@
+timezone: Asia/Tokyo
+
+_export:
+#  td:
+#    database: kosedmp_prd_secure
+
+  # 出力範囲
+  # 2年分を再作成
+  start_date: '2019-01-01'
+  # start_date: ${moment(session_time).add('months', -24).startOf('month').unix()}
+  # end_date: '2021-04-30'
+  end_date: ${moment(session_time).add('months', 1).startOf('month').format("YYYY-MM-DD")}
+
++task1:
+  td>: jn_sql_marketing_item_ranking.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: item_ranking
+    mode: truncate
+    method: copy
+    schema: public

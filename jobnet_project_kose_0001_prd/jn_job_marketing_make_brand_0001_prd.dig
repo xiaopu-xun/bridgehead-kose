@@ -1,0 +1,16 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_marketing_brand_result.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: brand_result
+    mode: truncate
+    method: copy
+    schema: public

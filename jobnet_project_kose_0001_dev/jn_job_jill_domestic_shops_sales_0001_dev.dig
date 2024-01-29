@@ -1,0 +1,22 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
+#都道府県別売上
++task1:
+  # 累計算出する期間を再作成
+  start_date: ${moment(session_time).add('months', -1).startOf('month').unix()}
+  end_date: ${moment(session_time).add('months', 1).startOf('month').unix()}
+
+  td>: jn_sql_domestic_shops_sales.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_domestic_shops_sales_analysis
+    mode: update
+    unique: date,store_code,state_code
+    method: copy
+    schema: public

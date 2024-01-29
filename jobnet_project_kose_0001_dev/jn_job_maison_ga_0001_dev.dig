@@ -1,0 +1,26 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  for_range>:
+    from: ${moment(session_time).add('days', -1).unix()}
+    to: ${session_unixtime}
+    # 期間指定用
+    # from: ${moment('2019-11-08').unix()}
+    # to: ${moment('2019-11-27').unix()}
+    step: 86400
+
+  _do:    
+    td>: jn_sql_tab_maison_ga1.sql
+    engine: presto
+    result_connection: datatank
+    result_settings:
+      database: datatank
+      table: dev_tab_maison_ga1
+      mode: update
+      unique: date
+      method: copy
+      schema: public

@@ -1,0 +1,24 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+    start_date: ${moment('2019-11-08').unix()}
+#    start_date: ${moment(session_time).add('days', -1).unix()}
+    end_date: ${moment(session_time).unix()}
+    # 期間指定用
+    # start_date: ${moment('2019-11-08').unix()}
+    # end_date: ${moment('2019-11-11').unix()}
+
+    td>: jn_sql_maison_sales.sql
+    engine: presto
+    result_connection: datatank
+    result_settings:
+      database: datatank
+      table: tab_maison_sales
+      mode: truncate
+      unique: date,order_place,brand,category1,category2,auto_action_flg,unit_price
+      method: insert
+      schema: public

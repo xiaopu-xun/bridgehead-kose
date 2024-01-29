@@ -1,0 +1,9 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  td>: jn_sql_create_segment_common_after_regist.sql
+  create_table: segment_common_after_regist

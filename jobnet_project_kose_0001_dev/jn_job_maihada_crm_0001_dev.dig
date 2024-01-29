@@ -1,0 +1,17 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  td>: jn_sql_maihada_crm1.sql
+  engine: presto
+  result_connection: datatank
+  result_settings:
+    database: datatank
+    table: dev_maihada_crm1
+    mode: update
+    unique: first_buy_month,customer_code,subscription_flg,first_buy_flg,honpin_flg
+    method: copy
+    schema: public

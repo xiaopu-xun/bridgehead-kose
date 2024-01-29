@@ -1,0 +1,39 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  for_range>:
+    from: ${moment(session_time).add('days', -1).unix()}
+    to: ${moment(session_time).unix()}
+    # 期間指定用
+    #from: ${moment('2020-07-30').unix()}
+    #to: ${moment('2020-08-01').unix()}
+    step: 86400
+
+  _do:
+    +subtask1:
+      td>: jn_sql_maison_customer_prov1.sql
+      create_table: tab_maison_customer_prov1
+    +subtask2:
+      td>: jn_sql_maison_customer_prov2.sql
+      create_table: tab_maison_customer_prov2
+    +subtask3:
+      td>: jn_sql_maison_customer_prov3.sql
+      create_table: tab_maison_customer_prov3
+    +subtask4:
+      td>: jn_sql_maison_customer_prov4.sql
+      create_table: tab_maison_customer_prov4
+    +subtask:
+      td>: jn_sql_maison_customer.sql
+      engine: presto
+      result_connection: datatank
+      result_settings:
+        database: datatank
+        table: tab_maison_customer
+        mode: update
+        unique: date,conductor,access_flg,login_flg,action_flg
+        method: copy
+        schema: public

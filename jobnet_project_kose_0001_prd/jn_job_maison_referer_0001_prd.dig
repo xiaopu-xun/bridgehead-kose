@@ -1,0 +1,27 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_prd_secure
+
++task1:
+  for_range>:
+    # データ連携遅れを考慮し、対象日を2日前までとする
+    from: ${moment(session_time).add('days', -2).unix()}
+    to: ${moment(session_time).unix()}
+    # 期間指定用
+    # from: ${moment('2019-11-08').unix()}
+    # to: ${moment('2019-12-07').unix()}
+    step: 86400
+
+  _do:
+    td>: jn_sql_maison_referer.sql
+    engine: presto
+    result_connection: datatank
+    result_settings:
+      database: datatank
+      table: tab_maison_referer
+      mode: update
+      unique: date,conductor
+      method: copy
+      schema: public

@@ -1,0 +1,9 @@
+timezone: Asia/Tokyo
+
+#_export:
+#  td:
+#    database: kosedmp_dev_secure
+
++task1:
+  td>: jn_sql_create_segment_common_store_mst.sql
+  create_table: segment_common_store_mst
