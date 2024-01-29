@@ -9,8 +9,7 @@ _error:
   to: [kosedmp_ops@dac.co.jp]
   
 _export:
-  td:
-    database: kosedmp_prd_secure
+  !include : 'config/env.dig'
   
 # データインポートチェック処理～セグメント作成
 +daily_data_check_workflow:

@@ -1,0 +1,36 @@
+#
+# KOSE_店舗情報取得
+#
+---
+in:
+  type: ${kose_sys.conn}
+  td_authentication_id: ${kose_sys.td_authentication_id}
+  bucket: ${kose_sys.bucket}
+  path_prefix: ${filename.store_mst}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 1 # 店舗情報はヘッダー行あり
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: store_id, type: string}
+    - {name: store_name, type: string}
+    - {name: area_name, type: string}
+    - {name: base_name, type: string}
+    - {name: branch_name, type: string}
+    - {name: channel_name, type: string}
+    - {name: zip_code, type: string}
+    - {name: company_name_1, type: string}
+    - {name: company_name_2, type: string}
+    - {name: shipment_restriction_kbn, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

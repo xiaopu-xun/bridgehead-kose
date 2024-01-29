@@ -35,3 +35,8 @@ timezone: Asia/Tokyo
   # create_segment_common_before_regist
   +task_common_segment_0008:
     call>: jn_job_common_segment_0008_prd.dig
+
+  # create_segment_common_after_regist_pii
+  +task_common_segment_0009:
+    call>: jn_job_common_segment_0009_prd.dig
+  
