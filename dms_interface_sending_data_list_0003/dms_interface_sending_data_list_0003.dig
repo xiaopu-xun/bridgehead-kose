@@ -1,0 +1,41 @@
+#
+# DMS_出力_TELあり
+#
+
+timezone: Asia/Tokyo
+
+schedule:
+  daily>: 15:00:00
+
+_export:
+  !include : 'config/env.dig'
+
++task1:
+  td>: create_dms_sending_data.sql
+  create_table: dms_sending_data_spot_tel
+
++for_each_dmcode:
+  td_for_each>: dms_sending_data_comparison_count.sql
+  _do:
+    +subtask1:
+      td>: dms_sending_data_comparison.sql
+      result_connection: ${dms.result_connection}
+      result_settings:
+        user_directory_is_root: true
+        path_prefix: ${dms.path_prefix.from_td}/${td.each.DM_CODE}_1_${td.each.COUNT}.csv
+        format: csv
+        header_line: true
+        quote_policy: ALL
+        newline: CRLF
+    +mail:
+      mail>: mail_dms_counts_spot1.txt
+      subject: '【KOSEDMP→DMS】【DEV】連携ファイル件数通知【スポット(${td.each.DM_CODE})(TELあり)】'
+      to: [kosedmp_ops@dac.co.jp]
+
++task2:
+  td_ddl>:
+  drop_tables: [dms_previous_sending_data_spot_tel]
+
++task3:
+  td_ddl>: 
+  rename_tables: [{from: dms_sending_data_spot_tel, to: dms_previous_sending_data_spot_tel}]

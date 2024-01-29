@@ -1,0 +1,13 @@
+DMS　乗上様
+
+お世話になっております。DAC運用担当です。
+※こちらTresure Dataより自動配信にてメールさせて頂いております。
+
+${moment().format("YYYYMMDD")}分の週次連携ファイル件数をご連絡致します。
+
+ファイル名：kose${moment().format("YYYYMMDD")}_${td.last_results.COUNT}_${moment().format("YYYYMMDDHHmmss")}.csv
+
+レコード数：${td.last_results.COUNT}件
+
+
+以上、ご確認のほどよろしくお願いいたします。

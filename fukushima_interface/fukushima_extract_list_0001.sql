@@ -1,0 +1,18 @@
+SELECT
+	sending_id,
+	date,
+	name,
+	param1,
+	param2,
+	param3,
+	channel,
+	messageparam1,
+	messageparam2,
+	messageparam3,
+	sendingcount,
+	extracted,
+	messagename,
+	segmentname,
+	messageid
+FROM
+	probance_extract_list
