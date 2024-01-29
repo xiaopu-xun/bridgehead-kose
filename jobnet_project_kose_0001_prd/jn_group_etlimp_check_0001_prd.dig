@@ -4,13 +4,13 @@ timezone: Asia/Tokyo
 +data_check:
   _parallel: false
 
-  # ECBeingアイテムマスタ情報チェック
-  +task_etl_import_ecbeing_item_mst_check:
-    call>: jn_job_etlimp_check_ecbeing_item_mst_0001_prd.dig
-
   # 顧客情報チェック
   +task_etl_import_customer_check:
     call>: jn_job_etlimp_check_customer_0001_prd.dig
+  
+  # 顧客情報(個人情報あり)チェック
+  +task_etl_import_customer_pii_check:
+    call>: jn_job_etlimp_check_customer_pii_0001_prd.dig
 
   # 購買情報チェック
   +task_etl_import_order_check:
@@ -20,6 +20,22 @@ timezone: Asia/Tokyo
   +task_etl_import_order_detail_check:
     call>: jn_job_etlimp_check_order_detail_0001_prd.dig
 
-  ## 定期情報チェック ※2021/10/20にコメントアウト(AM4:00に定期情報データが連携されるため)
-  #+task_etl_import_purchase_check:
-  #  call>: jn_job_etlimp_check_purchase_0001_prd.dig
+  # 定期情報チェック
+  +task_etl_import_periodical_purchase_check:
+    call>: jn_job_etlimp_check_periodical_purchase_0001_prd.dig
+
+  # セット情報チェック
+  +task_etl_import_set_check:
+    call>: jn_job_etlimp_check_set_mst_0001_prd.dig
+
+  # 店舗情報チェック
+  +task_etl_import_store_check:
+    call>: jn_job_etlimp_check_store_mst_0001_prd.dig
+  
+  # アイテム情報チェック
+  +task_etl_import_item_check:
+    call>: jn_job_etlimp_check_item_mst_0001_prd.dig
+
+  # ECBeingアイテムマスタ情報チェック(洗い替え)
+  +task_etl_import_ecbeing_item_mst_check:
+    call>: jn_job_etlimp_check_ecbeing_item_mst_0001_prd.dig
