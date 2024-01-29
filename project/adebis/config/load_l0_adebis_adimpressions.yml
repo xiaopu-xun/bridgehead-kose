@@ -1,0 +1,37 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_adimpressions
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: adIdSub, type: long}
+      - {name: adDate, type: string}
+      - {name: adImpression, type: long}
+      - {name: adId, type: string}
+      - {name: terminalType, type: long}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      adIdSub: adidsub
+      adDate: addate
+      adImpression: adimpression
+      adId: adid
+      terminalType: terminaltype
+  - type: column
+    columns:
+      - {name: adidsub, type: long}
+      - {name: addate, type: string}
+      - {name: adimpression, type: long}
+      - {name: adid, type: string}
+      - {name: terminaltype, type: long}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

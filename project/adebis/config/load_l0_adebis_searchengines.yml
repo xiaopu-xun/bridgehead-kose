@@ -1,0 +1,28 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_searchengines
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: engineId, type: long}
+      - {name: engineName, type: string}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      engineId: engineid
+      engineName: enginename
+  - type: column
+    columns:
+      - {name: engineid, type: long}
+      - {name: enginename, type: string}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

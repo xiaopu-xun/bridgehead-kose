@@ -1,0 +1,23 @@
+#
+# L0_ADEBiS_広告グループ設定1マスタデータ取得
+#
+
+_export:
+
+# エラー処理
+_error:
+  echo>: "L0_ADEBiS_広告グループ設定1マスタデータ取得でエラーが発生しました。"
+
+# 処理開始メッセージ出力
++start_msg:
+  echo>: "L0_ADEBiS_広告グループ設定1マスタデータ取得 処理開始"
+
+# データ取得
++load_l0_adebis_adgroup1s:
+  td_load>: config/load_l0_adebis_adgroup1s.yml
+  database: ${td.database}
+  table: ${l0_adebis_adgroup1s_table}
+
+# 処理終了メッセージ出力
++end_msg:
+  echo>: "L0_ADEBiS_広告グループ設定1マスタデータ取得 処理終了"

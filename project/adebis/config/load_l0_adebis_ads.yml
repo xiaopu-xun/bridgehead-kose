@@ -1,0 +1,82 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_ads
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: adId, type: string}
+      - {name: adNote, type: string}
+      - {name: adName, type: string}
+      - {name: url, type: string}
+      - {name: pageTitle, type: string}
+      - {name: lpoType, type: string}
+      - {name: mediaId, type: long}
+      - {name: adGroup1Id, type: long}
+      - {name: adGroup2Id, type: long}
+      - {name: adStartDate, type: string}
+      - {name: adEndDate, type: string}
+      - {name: textData, type: string}
+      - {name: bannerData, type: string}
+      - {name: registDate, type: string}
+      - {name: updateDate, type: string}
+      - {name: lpoAutoFlag, type: string}
+      - {name: accountListId, type: string}
+      - {name: measurementType, type: string}
+      - {name: deliveryType, type: string}
+      - {name: terminalType, type: string}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      adId: adid
+      adNote: adnote
+      adName: adname
+      url: url
+      pageTitle: pagetitle
+      lpoType: lpotype
+      mediaId: mediaid
+      adGroup1Id: adgroup1id
+      adGroup2Id: adgroup2id
+      adStartDate: adstartdate
+      adEndDate: adenddate
+      textData: textdata
+      bannerData: bannerdata
+      registDate: registdate
+      updateDate: updatedate
+      lpoAutoFlag: lpoautoflag
+      accountListId: accountlistid
+      measurementType: measurementtype
+      deliveryType: deliverytype
+      terminalType: terminaltype
+  - type: column
+    columns:
+      - {name: adid, type: string}
+      - {name: adnote, type: string}
+      - {name: adname, type: string}
+      - {name: url, type: string}
+      - {name: pagetitle, type: string}
+      - {name: lpotype, type: string}
+      - {name: mediaid, type: long}
+      - {name: adgroup1id, type: long}
+      - {name: adgroup2id, type: long}
+      - {name: adstartdate, type: string}
+      - {name: adenddate, type: string}
+      - {name: textdata, type: string}
+      - {name: bannerdata, type: string}
+      - {name: registdate, type: string}
+      - {name: updatedate, type: string}
+      - {name: lpoautoflag, type: string}
+      - {name: accountlistid, type: string}
+      - {name: measurementtype, type: string}
+      - {name: deliverytype, type: string}
+      - {name: terminaltype, type: string}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

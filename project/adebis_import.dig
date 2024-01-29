@@ -1,0 +1,76 @@
+#
+# ADEBiS_入力データ作成
+#
+
+timezone: Asia/Tokyo
+
+schedule:
+  daily>: 19:00:00
+
+_export:
+  # 環境変数定義ファイル読込
+  !include : 'config/env.dig'
+
+  # 使用テーブル
+  l0_adebis_accesses_table: adebis_accesses
+  l0_adebis_adcosts_table: adebis_adcosts
+  l0_adebis_adgroup1s_table: adebis_adgroup1s
+  l0_adebis_adgroup2s_table: adebis_adgroup2s
+  l0_adebis_adimpressions_table: adebis_adimpressions
+  l0_adebis_ads_table: adebis_ads
+  l0_adebis_conversions_table: adebis_conversions
+  l0_adebis_cvrulepatterns_table: adebis_cvrulepatterns
+  l0_adebis_medias_table: adebis_medias
+  l0_adebis_pages_table: adebis_pages
+  l0_adebis_searchengines_table: adebis_searchengines
+
+_error:
+  +error_mail:
+    call>: common/error/error_mail.dig
+
+# L0_ADEBiS_アクセスデータ取得
++run_l0_accesses:
+  call>: adebis/l0_adebis_accesses.dig
+
+# L0_ADEBiS_広告コスト設定マスタデータ取得
+# 2024/01/16時点で0レコードであり、未取得の可能性大
++run_l0_adcosts:
+  call>: adebis/l0_adebis_adcosts.dig
+
+# L0_ADEBiS_広告グループ設定1マスタデータ取得
++run_l0_adgroup1s:
+  call>: adebis/l0_adebis_adgroup1s.dig
+
+# L0_ADEBiS_広告グループ設定2マスタデータ取得
++run_l0_adgroup2s:
+  call>: adebis/l0_adebis_adgroup2s.dig
+
+# L0_ADEBiS_広告表示回数設定マスタデータ取得
+# 2024/01/16時点で0レコードであり、未取得の可能性大
++run_l0_adimpressions:
+  call>: adebis/l0_adebis_adimpressions.dig
+
+# L0_ADEBiS_広告計測設定マスタデータ取得
++run_l0_ads:
+  call>: adebis/l0_adebis_ads.dig
+
+# L0_ADEBiS_コンバージョン設定マスタデータ取得
++run_l0_conversions:
+  call>: adebis/l0_adebis_conversions.dig
+
+# L0_ADEBiS_コンバージョンルール設定マスタデータ取得
++run_l0_cvrulepatterns:
+  call>: adebis/l0_adebis_cvrulepatterns.dig
+
+# L0_ADEBiS_広告媒体設定マスタデータ取得
++run_l0_medias:
+  call>: adebis/l0_adebis_medias.dig
+
+# L0_ADEBiS_ページ設定マスタデータ取得
++run_l0_pages:
+  call>: adebis/l0_adebis_pages.dig
+
+# L0_ADEBiS_検索エンジン設定マスタデータ取得
+# 2024/01/16時点で0レコードであり、未取得の可能性大
++run_l0_searchengines:
+  call>: adebis/l0_adebis_searchengines.dig
