@@ -3,22 +3,8 @@
 #
 
 _export:
-  dst_table: customer
   
-  filename:
-    customer: k00001/k00055/csv/tran/koseCustomerData_${moment(session_time).format("YYYYMMDD")}
-
+# 顧客_個人情報ありTBLから対象カラムのみを抽出する、
 +task1:
-  td_load>: etl/config/load_customer.yml
-  table: ${dst_table}
-
-+task2:
-  td>: common/sql/count_record_for_session_day.sql
-  target_table: ${dst_table}
-  store_last_results: true
-
-# 会員系の当日データ不備は異常終了とする
-+task3:
-  if>: ${td.last_results.count == 0}
-  _do:
-    fail>: '[ERROR] customer count is 0.'
+  td>: jn_sql_etlimp_ex_pii.sql
+  insert_into: customer

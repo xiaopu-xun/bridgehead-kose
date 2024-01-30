@@ -4,13 +4,13 @@ timezone: Asia/Tokyo
 +data_check:
   _parallel: false
 
-  # 顧客情報チェック
-  +task_etl_import_customer_check:
-    call>: jn_job_etlimp_check_customer_0001_prd.dig
-  
   # 顧客情報(個人情報あり)チェック
   +task_etl_import_customer_pii_check:
     call>: jn_job_etlimp_check_customer_pii_0001_prd.dig
+
+  # 顧客情報チェック(個人情報取得後に実施する)
+  +task_etl_import_customer_check:
+    call>: jn_job_etlimp_check_customer_0001_prd.dig
 
   # 購買情報チェック
   +task_etl_import_order_check:
