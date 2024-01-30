@@ -1,0 +1,26 @@
+#
+# DMS_入力データ作成
+# クライアント側の当日ファイル配置は当日の9:00~18:00までに実施される
+# DMS社とのファイル連携時間調整必須.当日のファイル連携が間に合っていない可能性大(20231121記載)
+# 2021年5月18日から連携停止している状態(20240130記載)[https://dac-esys.backlog.jp/view/KOSE_GYOUMU-215]
+# 
+
+timezone: Asia/Tokyo
+
+schedule:
+  daily>: 10:00:00
+
+_export:
+  # 環境変数定義ファイル読込
+  !include : 'config/env.dig'
+  
+  # 使用テーブル
+  l0_dms_exclusion_user_list_table: dms_exclusion_user_list
+
+_error:
+  +error_mail:
+    call>: common/error/error_mail.dig
+
+# L0_DMS_除外ユーザーリスト取得
++run_l0_dms_exclusion_user_list:
+  call>: dms/l0_dms_exclusion_user_list.dig

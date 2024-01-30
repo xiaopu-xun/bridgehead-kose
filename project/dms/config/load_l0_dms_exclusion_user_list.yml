@@ -1,0 +1,31 @@
+in:
+  type: ${dms.conn}
+  td_authentication_id: ${dms.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${dms.path_prefix.to_td}
+  path_match_pattern: dms_exclusion_user_list_.*_${moment(session_time).format("YYYYMMDD")}.csv$
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 1
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: CST_ID_HASH, type: string}
+out:
+  mode: append
+filters:
+  - type: rename
+    columns:
+      CST_ID_HASH: cst_id_hash
+  - type: column
+    columns:
+      - {name: cst_id_hash, type: string}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}
