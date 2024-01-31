@@ -5,6 +5,7 @@
 _export:
   dst_table: periodical_purchase
   
+  # 当日2時にファイル出力される
   filename:
     periodical_purchase: k00001/k00055/csv/tran/kosePeriodicalPurchase_${moment(session_time).format("YYYYMMDD")}
 
