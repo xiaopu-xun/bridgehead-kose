@@ -8,7 +8,7 @@ _export:
 
   # 前日23時55分にファイル出力されるので日付情報を-1日にする
   filename:
-    ecbeing_item_mst: k00034/k00055/csv/master/FGOODS${moment(session_time).format("YYYYMMDD")}
+    ecbeing_item_mst: k00034/k00055/csv/master/FGOODS${moment(session_time).add(-1, 'days').format("YYYYMMDD")}
 
 +task1:
   td_load>: etl/config/load_ecbeing_item_mst.yml
