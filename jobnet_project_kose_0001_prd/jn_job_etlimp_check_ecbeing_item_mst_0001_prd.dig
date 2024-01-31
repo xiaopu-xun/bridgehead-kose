@@ -6,9 +6,9 @@ _export:
   tmp_dst_table: ecbeing_item_mst_wk
   dst_table: ecbeing_item_mst
 
-  # 前日23時55分にファイル出力されるので日付情報を-1日にする
+  # 当日0時以降にファイル出力される(1時までに設置完了)
   filename:
-    ecbeing_item_mst: k00034/k00055/csv/master/FGOODS${moment(session_time).add(-1, 'days').format("YYYYMMDD")}
+    ecbeing_item_mst: k00034/k00055/csv/master/FGOODS${moment(session_time).format("YYYYMMDD")}
 
 +task1:
   td_load>: etl/config/load_ecbeing_item_mst.yml
