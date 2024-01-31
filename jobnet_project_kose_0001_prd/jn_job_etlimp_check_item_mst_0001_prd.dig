@@ -5,8 +5,9 @@
 _export:
   dst_table: item_mst
   
+  # 前日23時にファイル出力されるので日付情報を-1日にする
   filename:
-    item_mst: k00008/k00055/csv/master/koseItemData_${moment(session_time).format("YYYYMMDD")}
+    item_mst: k00008/k00055/csv/master/koseItemData_${moment(session_time).add(-1, 'days').format("YYYYMMDD")}
 
 +task1:
   td_load>: etl/config/load_item_mst.yml

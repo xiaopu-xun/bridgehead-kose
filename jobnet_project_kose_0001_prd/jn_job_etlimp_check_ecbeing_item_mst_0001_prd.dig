@@ -6,6 +6,7 @@ _export:
   tmp_dst_table: ecbeing_item_mst_wk
   dst_table: ecbeing_item_mst
 
+  # 前日23時55分にファイル出力されるので日付情報を-1日にする
   filename:
     ecbeing_item_mst: k00034/k00055/csv/master/FGOODS${moment(session_time).format("YYYYMMDD")}
 

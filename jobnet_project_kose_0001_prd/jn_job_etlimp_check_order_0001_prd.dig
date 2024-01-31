@@ -5,6 +5,7 @@
 _export:
   dst_table: order
   
+  # 当日2時にファイル出力される
   filename:
     order: k00001/k00055/csv/tran/koseOrderData_${moment(session_time).format("YYYYMMDD")}
 
