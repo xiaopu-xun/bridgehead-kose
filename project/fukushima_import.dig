@@ -1,0 +1,25 @@
+#
+# 福島印刷_入力データ作成
+# クライアント側の当日ファイル配置は当日7:00に実施される
+# ファイル配置される日程は不定期である
+#
+
+timezone: Asia/Tokyo
+
+schedule:
+  daily>: 10:00:00
+
+_export:
+  # 環境変数定義ファイル読込
+  !include : 'config/env.dig'
+  
+  # 使用テーブル
+  l0_fukushima_receive_list_table: fukushima_receive_list
+
+_error:
+  +error_mail:
+    call>: common/error/error_mail.dig
+
+# L0_福島印刷_受信リスト取得
++run_l0_fukushima_receive_list:
+  call>: fukushima/l0_fukushima_receive_list.dig
