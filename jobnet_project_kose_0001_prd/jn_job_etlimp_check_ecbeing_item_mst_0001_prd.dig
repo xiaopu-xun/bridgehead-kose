@@ -6,6 +6,7 @@ _export:
   tmp_dst_table: ecbeing_item_mst_wk
   dst_table: ecbeing_item_mst
 
+  # 当日0時以降にファイル出力される(1時までに設置完了)
   filename:
     ecbeing_item_mst: k00034/k00055/csv/master/FGOODS${moment(session_time).format("YYYYMMDD")}
 

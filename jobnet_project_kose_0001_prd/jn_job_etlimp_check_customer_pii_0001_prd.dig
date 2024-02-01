@@ -6,6 +6,7 @@ _export:
   dst_database: ${td.pii_database}
   dst_table: customer_pii
   
+  # 当日2時にファイル出力される
   filename:
     customer_pii: k00001/k00055/csv/tran/koseCustomerData_${moment(session_time).format("YYYYMMDD")}
 
@@ -24,5 +25,5 @@ _export:
 +task3:
   if>: ${td.last_results.count == 0}
   _do:
-    fail>: '[ERROR] customer_pii count is 0.'
+    fail>: '[ERROR] customer count is 0.'
 
