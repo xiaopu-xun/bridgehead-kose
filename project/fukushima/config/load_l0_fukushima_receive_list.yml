@@ -1,0 +1,30 @@
+in:
+  type: ${fuku.conn}
+  td_authentication_id: ${fuku.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${fuku.path_prefix.to_td}
+  path_match_pattern: receive_list_${moment(session_time).format("YYYYMMDD")}
+  parser:
+    type: csv
+    charset: UTF-8
+    skip_header_lines: 1 # ヘッダー情報あり
+    delimiter: ","
+    quote: '"'
+    escape: '"'
+    newline: CRLF
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - {name: filename, type: string}
+      - {name: sendingid, type: string}
+      - {name: phm_sending_id, type: string}
+      - {name: receivedate, type: string}
+      - {name: receivecount, type: string}
+      - {name: result, type: string}
+out:
+  mode: append
+filters:
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

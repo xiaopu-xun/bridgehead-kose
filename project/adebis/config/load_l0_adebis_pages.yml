@@ -1,0 +1,37 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_pages
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: pageId, type: string}
+      - {name: pageTitle, type: string}
+      - {name: pageUrl, type: string}
+      - {name: registDate, type: string}
+      - {name: updateDate, type: string}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      pageId: pageid
+      pageTitle: pagetitle
+      pageUrl: pageurl
+      registDate: registdate
+      updateDate: updatedate
+  - type: column
+    columns:
+      - {name: pageid, type: string}
+      - {name: pagetitle, type: string}
+      - {name: pageurl, type: string}
+      - {name: registdate, type: string}
+      - {name: updatedate, type: string}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

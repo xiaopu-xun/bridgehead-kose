@@ -1,0 +1,94 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_accesses
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: recordId, type: string}
+      - {name: memberName, type: string}
+      - {name: amount, type: string}
+      - {name: other1, type: string}
+      - {name: other2, type: string}
+      - {name: other3, type: string}
+      - {name: other4, type: string}
+      - {name: other5, type: string}
+      - {name: terminalType, type: long}
+      - {name: userAgent, type: string}
+      - {name: prefName, type: string}
+      - {name: remoteAddr, type: string}
+      - {name: accessTime, type: string}
+      - {name: userId, type: string}
+      - {name: accessType, type: string}
+      - {name: accessDate, type: string}
+      - {name: referer, type: string}
+      - {name: engineId, type: string}
+      - {name: searchWord, type: string}
+      - {name: requestUri, type: string}
+      - {name: adId, type: string}
+      - {name: lpoId, type: string}
+      - {name: pageId, type: string}
+      - {name: conversionId, type: string}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      recordId: recordid
+      memberName: membername
+      amount: amount
+      other1: other1
+      other2: other2
+      other3: other3
+      other4: other4
+      other5: other5
+      terminalType: terminaltype
+      userAgent: useragent
+      prefName: prefname
+      remoteAddr: remoteaddr
+      accessTime: accesstime
+      userId: userid
+      accessType: accesstype
+      accessDate: accessdate
+      referer: referer
+      engineId: engineid
+      searchWord: searchword
+      requestUri: requesturi
+      adId: adid
+      lpoId: lpoid
+      pageId: pageid
+      conversionId: conversionid
+  - type: column
+    columns:
+      - {name: recordid, type: string}
+      - {name: membername, type: string}
+      - {name: amount, type: string}
+      - {name: other1, type: string}
+      - {name: other2, type: string}
+      - {name: other3, type: string}
+      - {name: other4, type: string}
+      - {name: other5, type: long}
+      - {name: terminaltype, type: string}
+      - {name: useragent, type: string}
+      - {name: prefname, type: string}
+      - {name: remoteaddr, type: string}
+      - {name: accesstime, type: string}
+      - {name: userid, type: string}
+      - {name: accesstype, type: string}
+      - {name: accessdate, type: string}
+      - {name: referer, type: string}
+      - {name: engineid, type: string}
+      - {name: searchword, type: string}
+      - {name: requesturi, type: string}
+      - {name: adid, type: string}
+      - {name: lpoid, type: string}
+      - {name: pageid, type: string}
+      - {name: conversionid, type: string}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

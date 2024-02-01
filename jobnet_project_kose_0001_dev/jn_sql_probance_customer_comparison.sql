@@ -33,9 +33,10 @@ WITH prep AS(
 		buy_count_maison,
 		buy_count_maihada,
 		IF(mag_drphil = '', null, mag_drphil) AS mag_drphil,
-		IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil
+		IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil,
+		IF(customer_rank = '', null, customer_rank) AS customer_rank
 	FROM
-		kosedmp_dev_secure.probance_data_customer
+		probance_data_customer
 	EXCEPT
 	SELECT
 		IF(cst_id = '', null, cst_id) AS cst_id,
@@ -69,10 +70,11 @@ WITH prep AS(
 		IF(first_buy_time = '', null, first_buy_time) AS first_buy_time,
 		buy_count_maison,
 		buy_count_maihada,
-		IF(mag_drphil = '', null, mag_drphil) AS mag_drphil,
-		IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil
+		IF(mag_drphil = '', null, l.mag_drphil) AS mag_drphil,
+		IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil,
+		IF(customer_rank = '', null, customer_rank) AS customer_rank
 	FROM
-		kosedmp_dev_secure.probance_previous_data_customer
+		probance_previous_data_customer
 )
 -- 個人情報付与
 -- 名（カナ）,姓（カナ）,名（漢字）,姓（漢字）,PCメールアドレスが対象
@@ -106,10 +108,11 @@ SELECT
 	IF(l.mag_maihada = '', null, l.mag_maihada) AS mag_maihada,
 	IF(l.skin_trouble = '', null, l.skin_trouble) AS skin_trouble,
 	IF(l.first_buy_time = '', null, l.first_buy_time) AS first_buy_time,
-	IF(l.buy_count_maison = '', null, l.buy_count_maison) AS buy_count_maison,
-	IF(l.buy_count_maihada = '', null, l.buy_count_maihada) AS buy_count_maihada,
+	buy_count_maison,
+	buy_count_maihada,
 	IF(l.mag_drphil = '', null, l.mag_drphil) AS mag_drphil,
-	IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil
+	IF(buy_count_drphil IS NULL, 0, buy_count_drphil) AS buy_count_drphil,
+	IF(customer_rank = '', null, customer_rank) AS customer_rank
 FROM
 	prep l
 	INNER JOIN ${td.pii_database}.segment_common_after_regist_pii AS r

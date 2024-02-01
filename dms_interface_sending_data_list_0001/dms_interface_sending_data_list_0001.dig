@@ -1,0 +1,44 @@
+#
+# DMS_出力_週次
+#
+
+timezone: Asia/Tokyo
+
+#毎週月曜日(1)起動
+schedule:
+  cron>: 0 15 * * 1
+
+_export:
+  !include : 'config/env.dig'
+
++task1:
+  td>: create_dms_sending_data.sql
+  create_table: dms_sending_data_weekly
+
++task2:
+  td>: dms_sending_data_comparison_count.sql
+  store_last_results: true
+
++task3:
+  td>: dms_sending_data_comparison.sql
+  result_connection: ${dms.result_connection}
+  result_settings:
+    user_directory_is_root: true
+    path_prefix: ${dms.path_prefix.from_td}/kose${moment(session_time).format("YYYYMMDD")}_${td.last_results.COUNT}.csv
+    format: csv
+    header_line: true
+    quote_policy: ALL
+    newline: CRLF
+
++task4:
+  td_ddl>:
+  drop_tables: [dms_previous_sending_data_weekly]
+
++task5:
+  td_ddl>: 
+  rename_tables: [{from: dms_sending_data_weekly, to: dms_previous_sending_data_weekly}]
+
++mail:
+  mail>: mail_dms_counts_weekly.txt
+  subject: '【KOSE→DMS】連携ファイル件数通知【週次】'
+  to: [kosedmp_ops@dac.co.jp]

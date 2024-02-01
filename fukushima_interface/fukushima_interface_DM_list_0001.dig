@@ -1,0 +1,50 @@
+#
+# 福島印刷_出力_DMリスト_有効期限なし
+#
+
+timezone: Asia/Tokyo
+
+schedule:
+  daily>: 15:10:00
+
+_error:
+  mail>: mail.txt
+  subject: '[ERROR]KOSEDMP TreasureData workflow[${task_name}]'
+  to: [kosedmp_ops@dac.co.jp]
+
+_export:
+  !include : 'config/env.dig'
+
++task1:
+  td>: no_xpiration_date_sending_id_list.sql
+  create_table: fukushima_dm_list01
+
++task2:
+  py>: python.dm_list.main
+  docker:
+    image: 'digdag/digdag-python:3.9'
+  _env:
+    PYTHON_PATH: '/home/td-user/python'
+    TD_API_KEY: ${secret:td.apikey}
+    TD_API_SERVER: ${secret:python.td.endpoint}
+    DATABASE: ${td.database}
+    PII_DATABASE: ${td.pii_database}
+    SFTP_HOSTNAME: ${secret:fuku.sftp.hostname}
+    SFTP_PORT: ${secret:fuku.sftp.port}
+    SFTP_USERNAME: ${secret:fuku.sftp.username}
+    SFTP_PRIVATE_KEY_STR: ${secret:fuku.sftp.private_key_str}
+    SFTP_REMOTE_PATH_PREFIX: ${fuku.path_prefix.from_td}
+    COOP_NAME: 'DMリスト_有効期限なし'
+    WORK_DIR: 'no_xpiration'
+    SESSION_DATE: ${session_date_compact}
+    LOOP_SQL_PATH: 'sql/fukushima_dm_list01_comparison.sql'
+    SEGMENT_SQL_PATH: 'sql/fukushima_interface_dm_list_0001.sql'
+    PARAMIKO_VERSION: ${paramiko.version}
+
++task3:
+  td_ddl>:
+  drop_tables: [fukushima_previous_dm_list01]
+
++task4:
+  td_ddl>: 
+  rename_tables: [{from: fukushima_dm_list01, to: fukushima_previous_dm_list01}]

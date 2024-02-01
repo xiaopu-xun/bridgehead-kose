@@ -58,4 +58,4 @@ SELECT
 	IF(trial_vat = '', null, trial_vat) AS TRIAL_VAT,
 	IF(brand = '', null, brand) AS BRAND
 FROM
-	kosedmp_prd_secure.probance_previous_data_order
+	probance_previous_data_order

@@ -1,0 +1,34 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_medias
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: mediaId, type: long}
+      - {name: mediaName, type: string}
+      - {name: mediaCaption, type: string}
+      - {name: rank, type: long}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      mediaId: mediaid
+      mediaName: medianame
+      mediaCaption: mediacaption
+      rank: rank
+  - type: column
+    columns:
+      - {name: mediaid, type: long}
+      - {name: medianame, type: string}
+      - {name: mediacaption, type: string}
+      - {name: rank, type: long}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

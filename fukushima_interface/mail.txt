@@ -1,0 +1,15 @@
+KOSEDMP TreasureData
+以下のタスクでエラーが発生しました。
+task_name : ${task_name}
+
+error message
+----------
+${error.message}
+----------
+
+session_uuid : ${session_uuid}
+session_id : ${session_id}
+session_time : ${session_time}
+
+詳細はコンソールよりログインして確認して下さい。
+https://console.treasuredata.co.jp/app/onboarding

@@ -2,20 +2,23 @@ timezone: Asia/Tokyo
 
 _export:
 
-#+task1:
+## 不要
+# +task1:
 #  td>: jn_sql_create_probance_line_friend_maihada.sql
 #  create_table: probance_line_friend_maihada
 
+## 不要
 #+task2:
 #  td>: jn_sql_create_probance_line_friend_maison.sql
 #  create_table: probance_line_friend_maison
 
+## 不要
 #+task3:
 #  td>: jn_sql_probance_interface_line_0001.sql
 #  create_table: probance_data_line
 
 +task4:
-  td>: test_no_records.sql #jn_sql_probance_line_comparison.sql
+  td>: jn_sql_probance_line_comparison.sql
   result_connection: ${probance.upload_maison_kose.result_connection}
   result_settings:
     user_directory_is_root: true
@@ -27,10 +30,12 @@ _export:
     null_string: ""
     newline: CRLF
 
+## 不要
 #+task5:
 #  td_ddl>:
 #  drop_tables: [probance_previous_data_line]
 
+## 不要
 #+task6:
 #  td_ddl>:
 #  rename_tables: [{from: probance_data_line, to: probance_previous_data_line}]

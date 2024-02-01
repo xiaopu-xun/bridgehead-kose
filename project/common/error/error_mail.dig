@@ -1,0 +1,10 @@
+#
+# メールエラー通知
+#
+
+timezone: Asia/Tokyo
+
++error_mail:
+  mail>: mail.txt
+  subject: '[ERROR] KOSEDMP TreasureData workflow'
+  to: [kosedmp_ops@dac.co.jp]

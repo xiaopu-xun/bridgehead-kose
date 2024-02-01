@@ -1,0 +1,40 @@
+in:
+  type: ${adebis.conn}
+  td_authentication_id: ${adebis.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${adebis.path_prefix}
+  path_match_pattern: adebis_provision_10035030_cvrulepatterns
+  decoders:
+    - {type: gzip}
+  parser:
+    type: json
+    columns:
+      - {name: id, type: string}
+      - {name: conversionId, type: string}
+      - {name: keyString, type: string}
+      - {name: matchTypeId, type: string}
+      - {name: registDate, type: string}
+      - {name: updateDate, type: string}
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: rename
+    columns:
+      id: id
+      conversionId: conversionid
+      keyString: keystring
+      matchTypeId: matchtypeid
+      registDate: registdate
+      updateDate: updatedate
+  - type: column
+    columns:
+      - {name: id, type: string}
+      - {name: conversionid, type: string}
+      - {name: keystring, type: string}
+      - {name: matchtypeid, type: string}
+      - {name: registdate, type: string}
+      - {name: updatedate, type: string}
+  - type: add_time
+    to_column: {name: time}
+    from_value: {value: ${moment(session_time).unix()}, unix_timestamp_unit: sec}

@@ -1,0 +1,7 @@
+---------------------------------------------------
+【Task Name】
+    ${task_name}
+【Session Time】
+    ${session_time}
+【Error Info】
+    ${error.message}
