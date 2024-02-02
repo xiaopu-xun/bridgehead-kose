@@ -16,7 +16,7 @@ in:
       - {name: adId, type: string}
       - {name: terminalType, type: long}
 out:
-  mode: append # 既存テーブルにinsertする形でデータ連携する
+  mode: replace
 filters:
   - type: rename
     columns:

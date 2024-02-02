@@ -15,7 +15,7 @@ in:
       - {name: mediaCaption, type: string}
       - {name: rank, type: long}
 out:
-  mode: append # 既存テーブルにinsertする形でデータ連携する
+  mode: replace
 filters:
   - type: rename
     columns:
