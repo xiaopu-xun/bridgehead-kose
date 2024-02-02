@@ -31,7 +31,7 @@ in:
       - {name: deliveryType, type: string}
       - {name: terminalType, type: string}
 out:
-  mode: append # 既存テーブルにinsertする形でデータ連携する
+  mode: replace
 filters:
   - type: rename
     columns:

@@ -16,7 +16,7 @@ in:
       - {name: registDate, type: string}
       - {name: updateDate, type: string}
 out:
-  mode: append # 既存テーブルにinsertする形でデータ連携する
+  mode: replace
 filters:
   - type: rename
     columns:
