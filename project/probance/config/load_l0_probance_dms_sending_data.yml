@@ -1,0 +1,40 @@
+in:
+  type: sftp_v2 # プラグイン種類
+  td_authentication_id: ${probance.extract_maison_kose_dms.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${probance.extract_maison_kose_dms.path_prefix}
+  path_match_pattern: dms_${moment(session_time).format('YYYYMMDD')} # 前方一致
+  parser:
+    skip_header_lines: 1
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ","
+    quote: '"'
+    escape: '\'
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - { name: sendingid, type: long }
+      - { name: date, type: string }
+      - { name: externalid, type: string }
+      - { name: param_campagne1, type: string }
+      - { name: param_campagne2, type: string }
+      - { name: param_campagne3, type: string }
+      - { name: param_message1, type: string }
+      - { name: param_message2, type: string }
+      - { name: param_message3, type: string }
+      - { name: cst_id, type: string }
+      - { name: post_no01, type: string }
+      - { name: post_no02, type: string }
+      - { name: todofuken_nm, type: string }
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: add_time
+    to_column:
+      name: time
+      type: timestamp
+    from_value:
+      mode: upload_time # サーバー時間をtimeカラムに格納する

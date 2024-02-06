@@ -1,0 +1,23 @@
+#
+# L0_Probance_PHM_DMリスト_有効期限あり取得
+#
+
+_export:
+
+# エラー処理
+_error:
+  echo>: "L0_Probance_PHM_DMリスト_有効期限あり取得でエラーが発生しました。"
+
+# 処理開始メッセージ出力
++start_msg:
+  echo>: "L0_Probance_PHM_DMリスト_有効期限あり取得 処理開始"
+
+# データ取得
++load_l0_probance_xpirationdate_dm_list:
+  td_load>: config/load_l0_probance_xpirationdate_dm_list.yml
+  database: ${td.database}
+  table: ${l0_probance_xpirationdate_dm_list_table}
+
+# 処理終了メッセージ出力
++end_msg:
+  echo>: "L0_Probance_PHM_DMリスト_有効期限あり取得 処理終了"

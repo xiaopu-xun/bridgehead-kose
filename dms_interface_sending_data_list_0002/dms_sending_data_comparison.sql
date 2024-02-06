@@ -45,7 +45,7 @@ SELECT
 	r.address1 AS ADDRESS02,
 	r.address2 AS ADDRESS03,
 	l.PARAM_CAMPAGNE1 AS DM_CODE,
-	r.tel AS TEL --TELなしセグメントであるため空値になる
+	'' AS TEL --TELなしセグメントであるため空値になる
 FROM
 	prep AS l
 	INNER JOIN ${td.pii_database}.segment_common_after_regist_pii AS r
