@@ -1,0 +1,34 @@
+in:
+  type: sftp_v2 # プラグイン種類
+  td_authentication_id: ${probance.extract_maison_kose_phmdata.td_authentication_id}
+  user_directory_is_root: true
+  timeout: 600
+  path_prefix: ${probance.extract_maison_kose_phmdata.path_prefix}
+  path_match_pattern: campaign_client_catalog_${moment(session_time).format('YYYYMMDD')}.csv # 完全一致
+  parser:
+    skip_header_lines: 1
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ","
+    quote: '"'
+    escape: '\'
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+      - { name: campaignclientid, type: long }
+      - { name: sendingid, type: long }
+      - { name: name, type: string }
+      - { name: external_id, type: string }
+      - { name: clientid, type: long }
+      - { name: cst_id, type: string }
+      - { name: sending_date, type: string }
+out:
+  mode: append # 既存テーブルにinsertする形でデータ連携する
+filters:
+  - type: add_time
+    to_column:
+      name: time
+      type: timestamp
+    from_value:
+      mode: upload_time # サーバー時間をtimeカラムに格納する
