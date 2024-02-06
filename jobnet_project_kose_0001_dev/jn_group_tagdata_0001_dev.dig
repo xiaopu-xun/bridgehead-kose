@@ -1,9 +1,0 @@
-timezone: Asia/Tokyo
-
-# タグデータ取込処理
-+tagdata_import:
-  _parallel: false
-
-  # id_mappingインポート
-  +task_td_idmapping_0001:
-    call>: jn_job_td_idmapping_0001_dev.dig

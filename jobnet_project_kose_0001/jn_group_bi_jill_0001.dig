@@ -1,0 +1,91 @@
+timezone: Asia/Tokyo
+
+# JILL用データマート作成処理
++data_jill_create:
+  _parallel: false
+
+  # jill_segment_common_order作成
+  +task_jill_segment_0001:
+    call>: jn_job_jill_segment_0001.dig
+
+  # jill_segment_common_order_detail作成
+  +task_jill_segment_0002:
+    call>: jn_job_jill_segment_0002.dig
+
+  # jill_segment_ec_kpad_order作成
+  +task_jill_segment_0003:
+    call>: jn_job_jill_segment_0003.dig
+
+  # jill_segment_ec_kpad_order_detail作成
+  +task_jill_segment_0004:
+    call>: jn_job_jill_segment_0004.dig
+
+  # jill_segment_common_order_detail_items作成
+  +task_jill_segment_0005:
+    call>: jn_job_jill_segment_0005.dig
+
+  # shipment_report作成
+  +task_jn_job_jill_regularly_0001:
+    call>: jn_job_jill_regularly_0001.dig
+
+  # customer_analysis作成
+  +task_jn_job_jill_customer_0001:
+    call>: jn_job_jill_customer_0001.dig
+
+  # gift_analysis作成
+  +task_jn_job_jill_gift_0001:
+    call>: jn_job_jill_gift_0001.dig
+
+  # new_product_sales作成
+  +task_jn_job_jill_newitem_0001:
+    call>: jn_job_jill_newitem_0001.dig
+
+  # limited_item_sales作成
+  +task_jn_job_jill_limititem_0001:
+    call>: jn_job_jill_limititem_0001.dig
+
+  # membership、line_follower_num作成
+  +task_jn_job_jill_sns_0001:
+    call>: jn_job_jill_sns_0001.dig
+
+  # jill_membership、jill_line_follower_num、jill_mailmagazine_num作成
+  +task_jn_job_jill_sns_0002:
+    call>: jn_job_jill_sns_0002.dig
+
+  # jill_item_sales作成
+  +task_jn_job_jill_item_0001:
+    call>: jn_job_jill_item_0001.dig
+
+  ## ga作成
+  # JILLSTUART_GA(UA版)のデータ取得が2023/9/7から停止したのでコメントアウト(20231130)
+  # +task_jn_job_jill_ga_0001:
+  #   call>: jn_job_jill_ga_0001.dig
+
+  ## traffic_source_analysis作成
+  # JILLSTUART_GA(UA版)のデータ取得が2023/9/7から停止したのでコメントアウト(20231130)
+  # +task_jn_job_jill_traffic_source_analysis_0001:
+  #   call>: jn_job_jill_traffic_source_analysis_0001.dig
+
+  # domestic_shops_sales_analysis作成
+  +task_jn_job_jill_domestic_shops_sales_0001:
+    call>: jn_job_jill_domestic_shops_sales_0001.dig
+
+  # jill_membership_by_pref作成
+  +task_jn_job_jill_membership_pref_0001:
+    call>: jn_job_jill_membership_pref_0001.dig
+
+  # second_sales_analysis作成
+  +task_jn_job_jill_2nd_sales_0001:
+    call>: jn_job_jill_2nd_sales_0001.dig
+
+  # age_analysis作成
+  +task_jn_job_jill_age_0001:
+    call>: jn_job_jill_age_0001.dig
+
+  # addon_services_analysis作成
+  +task_jn_job_jill_addon_services_0001:
+    call>: jn_job_jill_addon_services_0001.dig
+
+  # repeat_rate_analysis作成
+  +task_jn_job_jill_repeat_rate_0001:
+    call>: jn_job_jill_repeat_rate_0001.dig

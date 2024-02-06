@@ -1,9 +1,0 @@
-timezone: Asia/Tokyo
-
-# 全ブランドデータマート作成処理
-+data_allbrand_create:
-  _parallel: false
-
-  # create_allbrand_age_range_data
-  +task_allbrand_age_range_0001:
-    call>: jn_job_allbrand_age_range_0001_dev.dig

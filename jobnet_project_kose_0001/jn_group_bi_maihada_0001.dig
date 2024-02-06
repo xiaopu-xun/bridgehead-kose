@@ -1,0 +1,37 @@
+timezone: Asia/Tokyo
+
+# 米肌用データマート作成処理
++data_maihada_create:
+  _parallel: false
+
+  # maihada_basic1作成
+  +task_maihada_basic_0001:
+    call>: jn_job_maihada_basic_0001.dig
+
+  # maihada_basic2作成
+  +task_maihada_basic_0002:
+    call>: jn_job_maihada_basic_0002.dig
+  
+  # maihada_cp作成
+  +task_maihada_cp_0001:
+    call>: jn_job_maihada_cp_0001.dig
+
+  # maihada_crm1作成
+  +task_maihada_crm_0001:
+    call>: jn_job_maihada_crm_0001.dig
+
+  # maihada_crm2作成
+  +task_maihada_crm_0002:
+    call>: jn_job_maihada_crm_0002.dig
+
+  # maihada_first_buy作成
+  +task_maihada_1st_buy_0001:
+    call>: jn_job_maihada_1st_buy_0001.dig
+
+  # maihada_solutions作成
+  +task_maihada_solutions_0001:
+    call>: jn_job_maihada_solutions_0001.dig
+
+  # maihada_solutions作成(adebis)
+  +task_maihada_solutions_adebis_0001:
+    call>: jn_job_maihada_solutions_adebis_0001.dig

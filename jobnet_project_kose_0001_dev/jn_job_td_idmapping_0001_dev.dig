@@ -1,9 +1,0 @@
-timezone: Asia/Tokyo
-
-#_export:
-#  td:
-#    database: kosedmp_dev_secure
-
-+task1:
-  td>: jn_sql_id_mapping.sql
-  insert_into: id_mapping
