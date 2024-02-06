@@ -1,0 +1,75 @@
+#
+# Probance_入力データ作成
+#
+
+timezone: Asia/Tokyo
+
+# # クライアント側の当日ファイル配置は当日6:00に実施される
+# schedule:
+#   daily>: 13:00:00
+
+_export:
+  # 環境変数定義ファイル読込
+  !include : 'config/env.dig'
+  
+  # 使用テーブル
+  l0_probance_extract_list_table: probance_extract_list
+  l0_probance_no_xpirationdate_dm_list_table: probance_no_xpirationdate_dm_list
+  l0_probance_xpirationdate_dm_list_table: probance_xpirationdate_dm_list
+  l0_probance_dms_sending_data_table: probance_dms_sending_data
+  l0_probance_campaign_catalog_table: probance_campaign_catalog
+  l0_probance_campaign_client_catalog_table: probance_campaign_client_catalog
+  l0_probance_pmail_opens_table: probance_pmail_opens
+  l0_probance_pmail_clicks_table: probance_pmail_clicks
+  l0_probance_pmail_bounces_table: probance_pmail_bounces
+  l0_probance_pmail_unsubs_table: probance_pmail_unsubs
+  l0_probance_client_alea_table: probance_client_alea
+
+_error:
+  +error_mail:
+    call>: common/error/error_mail.dig
+
+# L0_Probance_PHM_出力キャンペーンリスト取得
++run_l0_probance_extract_list:
+  call>: probance/l0_probance_extract_list.dig
+
+# L0_Probance_PHM_DMリスト_有効期限なし取得
++run_l0_probance_no_xpirationdate_dm_list:
+  call>: probance/l0_probance_no_xpirationdate_dm_list.dig
+
+# L0_Probance_PHM_DMリスト_有効期限あり取得
++run_l0_probance_xpirationdate_dm_list:
+  call>: probance/l0_probance_xpirationdate_dm_list.dig
+
+# L0_Probance_DMS社連携データ取得
++run_l0_probance_dms_sending_data:
+  call>: probance/l0_probance_dms_sending_data.dig
+
+# L0_Probance_Probance予約配信履歴取得
++run_l0_probance_campaign_catalog:
+  call>: probance/l0_probance_campaign_catalog.dig
+
+# L0_Probance_Probace配信履歴取得
++run_l0_probance_campaign_client_catalog:
+  call>: probance/l0_probance_campaign_client_catalog.dig
+
+# L0_Probance_Pmailメール開封情報取得
++run_l0_probance_pmail_opens:
+  call>: probance/l0_probance_pmail_opens.dig
+
+# L0_Probance_Pmailクリック情報取得
++run_l0_probance_pmail_clicks:
+  call>: probance/l0_probance_pmail_clicks.dig
+
+# L0_Probance_Pmailバウンス情報取得
++run_l0_probance_pmail_bounces:
+  call>: probance/l0_probance_pmail_bounces.dig
+
+# L0_Probance_Pmail配信停止情報取得
++run_l0_probance_pmail_unsubs:
+  call>: probance/l0_probance_pmail_unsubs.dig
+
+# L0_Probance_ABテスト情報取得
++run_l0_probance_client_alea:
+  call>: probance/l0_probance_client_alea.dig
+  
