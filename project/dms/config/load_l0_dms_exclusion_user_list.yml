@@ -18,7 +18,7 @@ in:
     columns:
       - {name: CST_ID_HASH, type: string}
 out:
-  mode: replace
+  mode: append
 filters:
   - type: rename
     columns:
