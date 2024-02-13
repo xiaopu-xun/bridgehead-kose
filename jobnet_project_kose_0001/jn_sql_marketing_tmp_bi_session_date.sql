@@ -147,6 +147,31 @@ ORDER BY
 
 
 
+datum_access_flg_L AS ( --デコルテ
+SELECT
+	'L' as system_code,
+	td_global_id,
+	time,
+	COALESCE(LAG(time) OVER (PARTITION BY td_global_id ORDER BY time),time) AS prev_time, --前回アクセス時間
+	time - COALESCE(LAG(time) OVER (PARTITION BY td_global_id ORDER BY time), time) AS access_interval, --前回アクセス時間との差
+	CAST(((time - COALESCE(LAG(time) OVER (PARTITION BY td_global_id ORDER BY time), time)) > 30 * 60) AS INT) AS session_flg
+		--前回アクセス時間との差が30分以上か(30分以上を1セッションとする)
+FROM
+	td_web_cookie
+WHERE
+	TD_TIME_RANGE(time,
+	  '${start_date}', -- from(この値を含む)
+	  '${end_date}', -- to(この値を含まない)
+	  'JST')
+AND regexp_extract(td_url,'https://www.decorte.com') IS NOT NULL
+
+ORDER BY
+	td_global_id, time
+),
+
+
+
+
 /** ユーザーセッションキー生成 **/
 datum_access_session AS (
 
@@ -188,6 +213,7 @@ FROM
 WHERE
   access_interval <> 0 --接続時間0(直帰)を除く
 
+
 UNION ALL
 
 SELECT
@@ -197,6 +223,17 @@ FROM
 	datum_access_flg_G
 WHERE
    access_interval <> 0 --接続時間0(直帰)を除く
+
+
+UNION ALL
+
+SELECT
+  	*,  --td_global_id + session_flg でユーザーセッションキーを生成
+	CONCAT(td_global_id,'_',CAST(SUM(session_flg) OVER (PARTITION BY td_global_id ORDER BY time, session_flg DESC rows unbounded preceding) AS varchar)) AS user_session
+FROM
+	datum_access_flg_L
+WHERE
+  access_interval <> 0 --接続時間0(直帰)を除く
 ),
 
 
